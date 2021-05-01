@@ -20,7 +20,7 @@ STATUS_CODE FetchRoute(Route *route, char *path, char *route_name, int route_lin
         strcpy(route->route_name, route_name);
     }
     else{
-        fread(&route, sizeof(Route), 1, fp);
+        fread(route, sizeof(Route), 1, fp);
         fclose(fp);
         fp = NULL;
     }

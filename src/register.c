@@ -454,7 +454,7 @@ STATUS_CODE RegisterFunc(char *user_account)
       flagc=1;
       delay(50);
       MouseOn(mouse);
-    } else if(MousePress(210,640,360,700)) {
+    } else if(MousePress(210,640,360,700)&&flagc==1) {
       MouseOff(&mouse);
       delay(50);
       RegFunc();
@@ -464,7 +464,7 @@ STATUS_CODE RegisterFunc(char *user_account)
       Sign_in();
       flagc=1;
       MouseOn(mouse);
-    } else if(MousePress(435,640,580,700)) {
+    } else if(MousePress(435,640,580,700)&&flagc==1) {
       MouseOff(&mouse);
       delay(100);
       if (CheckEntryId(account, password) == SUCCESS_CODE) {
@@ -478,7 +478,8 @@ STATUS_CODE RegisterFunc(char *user_account)
       MouseOff(&mouse);
       delay(100);
       DrawEntryWindow();
-      return EXIT_CODE;
+      flagc=0;
+      MouseOn(mouse);
     } else if(MousePress(350,520,824,580)&&flagc==1) {
       delay(100);
       MouseOff(&mouse);
@@ -496,7 +497,7 @@ STATUS_CODE RegisterFunc(char *user_account)
     } else if(MousePress(921,3,1021,103))
     {
        CloseSVGA();
-       break;
+       return EXIT_CODE;
 	}
   }
   return SUCCESS_CODE;

@@ -29,21 +29,21 @@ void Maps()
   Bar1(904,708,1024,768,DARKGRAY24);
   Bar1(906,710,1022,766,LIGHTGRAY24);
   puthz(918,716,"返回",48,48,BLACK24);
-  puthz(917,715,"返回",48,48,BLACK24);
+  returnbut();
   for(i=0; i<4; i++) {
     Bar1(218,96+i*170,806,174+i*170,DARKGRAY24);
     Bar1(222,100+i*170,802,170+i*170,LIGHTGRAY24);
   }
-  puthz(223,113,"线路一",48,48,BLACK24);
-  puthz(222,112,"线路一",48,48,BLACK24);
+  puthz(223,113,"一路",48,48,BLACK24);
+  puthz(222,112,"一路",48,48,BLACK24);
   puthz(431,126,"刘家大湾",24,24,BLACK24);
   puthz(430,125,"刘家大湾",24,24,BLACK24);
   put_asc16_size(520,115,3,3,"(   )",BLACK24);
   puthz(543,126,"外环线",24,24,BLACK24);
   puthz(542,125,"外环线",24,24,BLACK24);
 
-  puthz(223,113+170,"线路三",48,48,BLACK24);
-  puthz(222,112+170,"线路三",48,48,BLACK24);
+  puthz(223,113+170,"二路",48,48,BLACK24);
+  puthz(222,112+170,"二路",48,48,BLACK24);
   puthz(431,126+170,"刘家大湾",24,24,BLACK24);
   puthz(430,125+170,"刘家大湾",24,24,BLACK24);
   put_asc16_size(535,115+170,3,3,"-->",BLACK24);
@@ -53,8 +53,8 @@ void Maps()
   puthz(719,126+170,"外",24,24,BLACK24);
   puthz(718,125+170,"外",24,24,BLACK24);
 
-  puthz(223,113+340,"线路四",48,48,BLACK24);
-  puthz(222,112+340,"线路四",48,48,BLACK24);
+  puthz(223,113+340,"三路",48,48,BLACK24);
+  puthz(222,112+340,"三路",48,48,BLACK24);
   puthz(431,126+340,"刘家大湾",24,24,BLACK24);
   puthz(430,125+340,"刘家大湾",24,24,BLACK24);
   put_asc16_size(535,115+340,3,3,"-->",BLACK24);
@@ -64,8 +64,8 @@ void Maps()
   puthz(719,126+340,"全",24,24,BLACK24);
   puthz(718,125+340,"全",24,24,BLACK24);
 
-  puthz(223,113+510,"线路五",48,48,BLACK24);
-  puthz(222,112+510,"线路五",48,48,BLACK24);
+  puthz(223,113+510,"四路",48,48,BLACK24);
+  puthz(222,112+510,"四路",48,48,BLACK24);
   puthz(431,126+510,"刘家大湾",24,24,BLACK24);
   puthz(430,125+510,"刘家大湾",24,24,BLACK24);
   put_asc16_size(535,115+510,3,3,"-->",BLACK24);
@@ -129,6 +129,7 @@ void ReadLineInfo(Lines *l, int line)
 void DisplayTraces(int line, int start, int end)
 {
   int ids = -1, ide = -1, i, reverse = 0;
+  char ch;
   FILE *fp;
   Lines l;
   Sta cur, pre;
@@ -155,8 +156,9 @@ void DisplayTraces(int line, int start, int end)
     fp = fopen(path, "rb");
     if(fp == NULL) {
       CloseSVGA();
-      fprintf(stderr, "fopen error\n");
-      while(1);
+      fprintf(stderr, "fopen error: file %s dose not exist\n station: %d\n", path, l.station_numbers[i]);
+      ch = getchar();
+      exit(ERROR_CODE);
     }
     fread(&cur, sizeof(cur), 1, fp);
     fclose(fp);
@@ -271,14 +273,17 @@ char *CalcMapName(char *path, int line)
 
 void ShowSta(int line)
 {
+  
   puthz(301,601,"站名",48,48,BLACK24);
   puthz(300,600,"站名",48,48,BLACK24);
-  Stak(line,400,600);
+  Stak(line,400,600,1,0);
 }
 
-void Stak(int line,int x,int y)
+void Stak(int line,int x,int y,int func,int note)
 {
   int l=0;
+  int choose=0;
+  int temp_note;
   int cur_station = 0;
   staname station[28]= {
     {1,"刘家大湾"},
@@ -561,10 +566,49 @@ void Stak(int line,int x,int y)
       puthz(x+1,y+1,station[l-1].stationname,48,48,BLACK24);
       puthz(x,y,station[l-1].stationname,48,48,BLACK24);
 
-    } else if(MousePress(906,710,1022,766)) {
+    } else if(MousePress(906,710,1022,766)&&choose==0) {
       MouseOff(&mouse);
       break;
-    }
+      
+    } else if(MousePress(412,670,612,720)&&func==2&&choose==0) {
+	    RecordBox(1);
+	    choose=1;
+		  
+	} else if(MousePress(639,589,689,639)&&func==2&&choose==1) {
+	    MouseOff(&mouse);
+	    YNbut(2);
+	    temp_note=1;
+	    YNbut(4);
+	    MouseOn(mouse);
+		  
+	} else if(MousePress(692,589,742,639)&&func==2&&choose==1) {
+		MouseOff(&mouse);
+		YNbut(3);
+		temp_note=0;
+		YNbut(4);
+		MouseOn(mouse);		  
+	} else if(MousePress(739,649,789,699)&&func==2&&choose==1) {
+		MouseOff(&mouse);
+        YNbut(5);
+        temp_note=2;
+        YNbut(1);
+        MouseOn(mouse);
+    } else if(MousePress(784,710,900,766)&&func==2&&choose==1) {
+    	note=temp_note;
+    	Bar1(0,560,1024,768,DARKCYAN24); 	
+        Bar1(414,672,614,722,BLACK24);
+	    Bar1(412,670,612,720,LIGHTGRAY24);
+	    puthz(416,671,"发热上报",48,48,BLACK24);
+        returnbut();
+        choose=0;
+	} else if(MousePress(906,710,1022,766)&&func==2&&choose==1) {
+		Bar1(0,560,1024,768,DARKCYAN24); 	
+        Bar1(414,672,614,722,BLACK24);
+	    Bar1(412,670,612,720,LIGHTGRAY24);
+	    puthz(416,671,"发热上报",48,48,BLACK24);
+        returnbut();
+        choose=0;
+	}
   }
 }
 STATUS_CODE DisplayLine(int line)
@@ -594,16 +638,54 @@ STATUS_CODE DrawMainPage()
   Bar1(904,708,1024,768,DARKGRAY24);
   Bar1(906,710,1022,766,LIGHTGRAY24);
   puthz(918,716,"返回",48,48,BLACK24);
-  puthz(917,715,"返回",48,48,BLACK24);
+  returnbut();
   return SUCCESS_CODE;
 }
 
-
-
-void Relevant(Route *route,int page)
+void readmessage(Route *temp_route,int rpage,int i)
 {
+	StaName(temp_route->ps[(rpage-1)*4+i].start,258,199+(i*120));
+    StaName(temp_route->ps[(rpage-1)*4+i].end,570,199+(i*120));
+    ShowTime(temp_route->ps[(rpage-1)*4+i].name,250,149+i*120);
+    ShowTime(temp_route->ps[(rpage-1)*4+i].time,561,149+i*120);
+}
+void rRead(Route *route,UserInfo *user,int rpage)
+{
+	int i;
+	int k;
+	Route *temp_route;
+    temp_route = route;
+    
+	for(i=0;i<temp_route->npassenger;i++) {
+		if(strcmp(temp_route->ps[i].name,user->name)==0) {
+			k=i;
+			
+			while(k + 1 < temp_route->npassenger) {
+				
+				temp_route->ps[k]=temp_route->ps[k+1];
+				k++;
+				
+			} 
+			
+			temp_route->npassenger--;
+		}
+	}
+	for(i=0; i<4; i++) {
+	if(temp_route->ps[(rpage-1)*4+i].note==0&&temp_route->npassenger>(rpage-1)*4+i) {
+      InfoName(2,i);
+      readmessage(temp_route,rpage,i);
+    } else if(temp_route->ps[(rpage-1)*4+i].note==1&&temp_route->npassenger>(rpage-1)*4+i) {
+      InfoName(3,i);
+      readmessage(temp_route,rpage,i);
+	} else if(temp_route->ps[(rpage-1)*4+i].note==2&&temp_route->npassenger>(rpage-1)*4+i) {
+      InfoName(4,i);
+      readmessage(temp_route,rpage,i);	
+	}
+  }
+}
 
-  int i;
+void Relevant(Route *route,int rpage,UserInfo *user)
+{
   prt_hz16_size(193,32,4,4,"同车乘客行程记录查询",DARKGRAY24,"HZK\\hzk16");
   prt_hz16_size(191,30,4,4,"同车乘客行程记录查询",BLACK24,"HZK\\hzk16");
   Bar1(130,140,894,250,LIGHTGRAY24);
@@ -614,24 +696,8 @@ void Relevant(Route *route,int page)
   Bar1(132,262,892,368,NAVY24);
   Bar1(132,382,892,488,NAVY24);
   Bar1(132,502,892,608,NAVY24);
-  for(i=0; i<4; i++) {
-	if(route->ps[(page-1)*4+i].note==0&&route->npassenger>(page-1)*4+i) {
-      InfoName(2,i);
-      StaName(route->ps[(page-1)*4+i].start,258,199+(i*120));
-      StaName(route->ps[(page-1)*4+i].end,570,199+(i*120));
-      ShowTime(route->ps[(page-1)*4+i].name,250,149+i*120);
-    } else if(route->ps[(page-1)*4+i].note==1&&route->npassenger>(page-1)*4+i) {
-      InfoName(3,i);
-      StaName(route->ps[(page-1)*4+i].start,258,199+(i*120));
-      StaName(route->ps[(page-1)*4+i].end,570,199+(i*120));
-      ShowTime(route->ps[(page-1)*4+i].name,250,149+i*120);
-    } else if(route->ps[(page-1)*4+i].note==1&&route->npassenger>(page-1)*4+i) {
-      InfoName(4,i);
-      StaName(route->ps[(page-1)*4+i].start,258,199+(i*120));
-      StaName(route->ps[(page-1)*4+i].end,570,199+(i*120));
-      ShowTime(route->ps[(page-1)*4+i].name,250,149+i*120);	
-	}
-  }
+  
+  rRead(route,user,rpage);
 }
 
 
@@ -692,9 +758,11 @@ void InfoN(int c,int i)
       puthz(759,210+i*120,"同车乘客",24,24,WHITE24);
 	} else if(c==2) {
 	  puthz(139,149+(i*120),"姓名",32,32,DARKGRAY24);
+	  puthz(451,149+(i*120),"时间",32,32,DARKGRAY24);
       puthz(139,199+(i*120),"起点站",32,32,DARKGRAY24);
       puthz(451,199+(i*120),"终点站",32,32,DARKGRAY24);
       puthz(138,148+(i*120),"姓名",32,32,WHITE24);
+      puthz(450,148+(i*120),"时间",32,32,WHITE24);
       puthz(138,198+(i*120),"起点站",32,32,WHITE24);
       puthz(450,198+(i*120),"终点站",32,32,WHITE24);
       Bar1(760,152+i*120,858,186+i*120,DARKGRAY24);
@@ -728,114 +796,64 @@ void InfoName(int c,int i)
 	  InfoN(1,i);	
 	}
 }
-void RecordTrace(UserInfo *user,int page,int line,int c)
+void returnbut()
 {
-	if(c==1) {
-	   Bar(0,0,1024,768,DARKCYAN24);
-       DisplayLine(user->history_lines[(page-1)*4+line-1].line_no);
-	   DisplayTraces(user->history_lines[(page-1)*4+line-1].line_no,user->history_lines[(page-1)*4+line-1].start,user->history_lines[(page-1)*4+line-1].end);
-	   Bar1(414,602,614,652,BLACK24);
-	   Bar1(412,600,612,650,LIGHTGRAY24);
-	   Bar1(414,672,614,722,BLACK24);
-	   Bar1(412,670,612,720,LIGHTGRAY24);
-	   puthz(416,601,"查看站点",48,48,BLACK24);
-	   puthz(416,671,"发热上报",48,48,BLACK24);
-	   Bar1(904,708,1024,768,DARKGRAY24);
-       Bar1(906,710,1022,766,LIGHTGRAY24);
-       puthz(918,716,"返回",48,48,BLACK24);
-       puthz(917,715,"返回",48,48,BLACK24);
-	} else if(c==2) {
-		Bar(0,0,1024,768,DARKCYAN24);
-    	DisplayLine(user->history_lines[(page-1)*4+line-1].line_no);
-    	DisplayTraces(user->history_lines[(page-1)*4+line-1].line_no,user->history_lines[(page-1)*4+line-1].start,user->history_lines[(page-1)*4+line-1].end);
-    	Bar1(904,708,1024,768,DARKGRAY24);
-        Bar1(906,710,1022,766,LIGHTGRAY24);
-        puthz(918,716,"返回",48,48,BLACK24);
-        puthz(917,715,"返回",48,48,BLACK24);
-        Stak(user->history_lines[(page-1)*4+line-1].line_no,500,600);
-	}
-}
-void RPTrace(Route *route,int page,int line)
-{
-	Bar(0,0,1024,768,DARKCYAN24);
-	DisplayLine(route->line);
-	DisplayTraces(route->line,route->ps[(page-1)*4+line-1].start,route->ps[(page-1)*4+line-1].end);
-	Bar1(414,602,614,652,BLACK24);
 	Bar1(904,708,1024,768,DARKGRAY24);
     Bar1(906,710,1022,766,LIGHTGRAY24);
     puthz(918,716,"返回",48,48,BLACK24);
     puthz(917,715,"返回",48,48,BLACK24);
-    Stak(route->line,500,600);
+}
+
+void RecordTrace(UserInfo *user,int page,int line,int c)
+{
+	if(c==1) {
+	   Bar1(0,0,1024,768,DARKCYAN24);
+       DisplayLine(user->history_lines[(page-1)*4+line-1].line_no);
+	   DisplayTraces(user->history_lines[(page-1)*4+line-1].line_no,user->history_lines[(page-1)*4+line-1].start,user->history_lines[(page-1)*4+line-1].end);
+	   Bar1(414,672,614,722,BLACK24);
+	   Bar1(412,670,612,720,LIGHTGRAY24);
+	   puthz(416,671,"发热上报",48,48,BLACK24);
+       returnbut();
+	} else if(c==2) {
+		Bar1(0,0,1024,768,DARKCYAN24);
+    	DisplayLine(user->history_lines[(page-1)*4+line-1].line_no);
+    	DisplayTraces(user->history_lines[(page-1)*4+line-1].line_no,user->history_lines[(page-1)*4+line-1].start,user->history_lines[(page-1)*4+line-1].end);
+        returnbut();
+        Stak(user->history_lines[(page-1)*4+line-1].line_no,500,600,1,0);
+	}
+}
+void RPTrace(Route *route,int page,int line)
+{
+	Bar1(0,0,1024,768,DARKCYAN24);
+	DisplayLine(route->line);
+	DisplayTraces(route->line,route->ps[(page-1)*4+line-1].start,route->ps[(page-1)*4+line-1].end);
+    returnbut();
+    Stak(route->line,500,600,1,0);
 }
 void RecordBox(int i)
 {
 	if(i==0){
 	Bar1(0,560,1024,768,DARKCYAN24);
 	Line_Thick(362,720,662,720,2,BLACK24);
-	Bar1(904,708,1024,768,DARKGRAY24);
-    Bar1(906,710,1022,766,LIGHTGRAY24);
-    puthz(918,716,"返回",48,48,BLACK24);
-    puthz(917,715,"返回",48,48,BLACK24);
+    returnbut();
 	}else if(i==1){
 	Bar1(0,560,1024,768,LIGHTGRAY24);
-	Bar1(904,708,1024,768,DARKGRAY24);
-    Bar1(906,710,1022,766,LIGHTGRAY24);
-    puthz(918,716,"返回",48,48,BLACK24);
-    puthz(917,715,"返回",48,48,BLACK24);
+    returnbut();
 	AddBox3();
 	}
 }
 void RecordFunc(UserInfo *user,int page,int line)
 {
    int note;
-   int choose=0;
    RecordTrace(user,page,line,1);
-   Mouse_Init();
-   while(1)
-   {
-		MouseShow(&mouse);
-		if(MousePress(412,600,612,650)&&choose==0){
-		  RecordBox(0);
-		  Stak(user->history_lines[(page-1)*4+line-1].line_no,392,640);
-		  RecordTrace(user,page,line,1);
-		} else if(MousePress(412,670,612,720)&&choose==0){
-		  RecordBox(1);
-		  choose=1;
-		} else if(MousePress(639,589,689,639)&&choose==1) {
-		  MouseOff(&mouse);
-		  YNbut(2);
-		  note=1;
-		  MouseOn(mouse);
-		} else if(MousePress(692,589,742,639)&&choose==1) {
-		  MouseOff(&mouse);
-		  YNbut(3);
-		  note=0;
-		  MouseOn(mouse);
-		} else if(MousePress(639,649,689,699)&&choose==1) {
-          MouseOff(&mouse);
-          YNbut(5);
-          note=2;
-          MouseOn(mouse);
-	    } else if(MousePress(784,710,900,766)&&choose==1) {
-	      user->history_lines[(page-1)*4+line-1].note=note;
-	      choose=0;
-	      RecordTrace(user,page,line,1);
-		} else if(MousePress(906,710,1022,766)) {
-			MouseOff(&mouse);
-			if(choose==1){
-				RecordTrace(user,page,line,1);
-		        choose=0;
-			}else if(choose==0){
-				
-			    break;	
-			}
-		}
-	}
+   Stak(line,410,600,2,note);
+   delay(100);
+   user->history_lines[(page-1)*4+line-1].note=note;
 }
 void HisBoxFunc(UserInfo *user)
 {
   int page = 1;
-  int line=1;
+  int line=0;
   PuOne();
   DrawPage(page);
   Hisbox(page, user);
@@ -886,58 +904,82 @@ void HisBoxFunc(UserInfo *user)
     } else if(MousePress(760,152,858,186)) {
       MouseOff(&mouse);
 	  line=1;
-	  RecordFunc(user,page,line);
-	  PuOne();
-	  Hisbox(page,user);
-	  DrawPage(page);
+	  if(user->nhistory>(page-1)*4+line-1) {
+	  	RecordFunc(user,page,line);
+	    PuOne();
+	    Hisbox(page,user);
+	    DrawPage(page);
+	  }
 	  MouseOn(mouse);//显示当页第一条路径
 	} else if(MousePress(760,272,858,306)) {
 	  MouseOff(&mouse);
 	  line=2;
-	  RecordFunc(user,page,line);
-	  PuOne();
-	  Hisbox(page,user);
-	  DrawPage(page);
+	  if(user->nhistory>(page-1)*4+line-1) {
+	  	RecordFunc(user,page,line);
+	    PuOne();
+	    Hisbox(page,user);
+	    DrawPage(page);
+	  }
 	  MouseOn(mouse);//显示当页第二条路径
 	} else if(MousePress(760,392,858,426)) {
 	  MouseOff(&mouse);
 	  line=3;
-	  RecordFunc(user,page,line);
-      PuOne();
-      Hisbox(page,user);
-      DrawPage(page);
+	  if(user->nhistory>(page-1)*4+line-1) {
+	  	RecordFunc(user,page,line);
+	    PuOne();
+	    Hisbox(page,user);
+	    DrawPage(page);
+	  }
       MouseOn(mouse);//显示当页第三条路经
     } else if(MousePress(760,512,858,546)) {
       MouseOff(&mouse);
       line=4;
-	  RecordFunc(user,page,line);
-	  PuOne();
-	  Hisbox(page,user);
-	  DrawPage(page);
+	  if(user->nhistory>(page-1)*4+line-1) {
+	  	RecordFunc(user,page,line);
+	    PuOne();
+	    Hisbox(page,user);
+	    DrawPage(page);
+	  }
 	  MouseOn(mouse);//显示当页第四条路径
 	} else if(MousePress(760,207,858,241)) {
       MouseOff(&mouse);
       line=1;
-      RelevantF(page,line,user);
-      page=1;
+      if(user->nhistory>(page-1)*4+line-1) {
+      	RelevantF(page,line,user);
+        PuOne();
+	    Hisbox(page,user);
+	    DrawPage(page);
+	  }
       MouseOn(mouse);//查看当页第一条记录对应乘客乘车记录
     } else if(MousePress(760,327,858,361)) {
       MouseOff(&mouse);
       line=2;
-      RelevantF(page,line,user);
-      page=1;
+      if(user->nhistory>(page-1)*4+line-1) {
+      	RelevantF(page,line,user);
+        PuOne();
+	    Hisbox(page,user);
+	    DrawPage(page);
+	  }
       MouseOn(mouse);//查看当页第二条记录对应乘客乘车记录
     } else if(MousePress(760,447,858,481)) {
       MouseOff(&mouse);
       line=3;
-      RelevantF(page,line,user);
-      page=1;
+      if(user->nhistory>(page-1)*4+line-1) {
+      	RelevantF(page,line,user);
+        PuOne();
+	    Hisbox(page,user);
+	    DrawPage(page);
+	  }
       MouseOn(mouse);//查看当页第三条记录对应乘客乘车记录
     } else if(MousePress(760,567,858,601)) {
       MouseOff(&mouse);
       line=4;
-      RelevantF(page,line,user);
-      page=1;
+      if(user->nhistory>(page-1)*4+line-1) {
+      	RelevantF(page,line,user);
+        PuOne();
+	    Hisbox(page,user);
+	    DrawPage(page);
+	  }
       MouseOn(mouse);//查看当页第四条记录对应乘客乘车记录
     }
   }
@@ -947,84 +989,97 @@ void RelevantF(int page,int line, UserInfo *user) //////////////////////////////
 {
   int rpage=1;
   int rline=0;
+  int i;
   Route route;
-  char time[10];
-  char bnum[4];
   char route_name[16];
-  time[0] = '\0'; 
-  bnum[0] = '\0';
-  route_name[0] = '\0';
-  strcpy(time,user->history_lines[(page-1)*4+line-1].time);
-  strcpy(bnum,user->history_lines[(page-1)*4+line-1].busnum); 
-  strcat(time,bnum);
-  strcpy(route_name,time);
+   
+  strcpy(route_name,user->history_lines[(page-1)*4+line-1].busnum);//获取用户该条乘车记录的车号
+   
   ReadRoute(&route,route_name);
+  
   PuOne();
   DrawPage(rpage);
-  Relevant(&route,page);
+  Relevant(&route,rpage,user);
   Mouse_Init();
   while (1) {
     MouseShow(&mouse);
     if(MousePress(572,619,674,659)) {
       if(rpage==1) {
-        page=2;
+        rpage=2;
         DrawPage(rpage);
-        Relevant(&route,rpage);
+        Relevant(&route,rpage,user);
         delay(100);
       } else if(rpage==2) {
-        page=3;
+        rpage=3;
         DrawPage(rpage);
-        Relevant(&route,rpage);
+        Relevant(&route,rpage,user);
         delay(100);
       } else if(rpage==3) {
-        page=4;
+        rpage=4;
         DrawPage(rpage);
-        Relevant(&route,rpage);
+        Relevant(&route,rpage,user);
         delay(100);
       }
     } else if(MousePress(350,619,450,659)) {
       if(rpage==2) {
-        page=1;
+        rpage=1;
         DrawPage(rpage);
-        Relevant(&route,rpage);
+        Relevant(&route,rpage,user);
         delay(100);
       } else if(rpage==3) {
         rpage=2;
         DrawPage(rpage);
-        Relevant(&route,rpage);
+        Relevant(&route,rpage,user);
         delay(100);
       } else if(rpage==4) {
         rpage=3;
         DrawPage(rpage);
-        Relevant(&route,rpage);
+        Relevant(&route,rpage,user);
         delay(100);
       }
     } else if(MousePress(904,708,1024,768)) {
       MouseOff(&mouse);
-      PuOne();
-      DrawPage(1);
-      Hisbox(page, user);
       break;
     } else if(MousePress(760,152,858,186)) {
       MouseOff(&mouse);//显示当页第一条记录对应路线
       rline=1;
-      RPTrace(&route,rpage,rline);
+      if(route.npassenger>(rpage-1)*4+rline-1) {
+      	RPTrace(&route,rpage,rline);
+      	PuOne();
+      	Relevant(&route,rpage,user);
+      	DrawPage(rpage);
+	  }
       MouseOn(mouse);
     } else if(MousePress(760,272,858,306)) {
       MouseOff(&mouse);//显示当页第二条记录对应路线
       rline=2;
-      RPTrace(&route,rpage,rline);
+      if(route.npassenger>(rpage-1)*4+rline-1) {
+      	RPTrace(&route,rpage,rline);
+      	PuOne();
+      	Relevant(&route,rpage,user);
+      	DrawPage(rpage);
+	  }
       MouseOn(mouse);
     } else if(MousePress(760,392,858,426)) {
       MouseOff(&mouse);//显示当页第三条记录对应路线
       rline=3;
-      RPTrace(&route,rpage,rline);
+      if(route.npassenger>(rpage-1)*4+rline-1) {
+      	RPTrace(&route,rpage,rline);
+      	PuOne();
+      	Relevant(&route,rpage,user);
+      	DrawPage(rpage);
+	  }
       MouseOn(mouse);
     } else if(MousePress(760,512,858,546)) {
       MouseOff(&mouse);//显示当页第四条记录对应路线
       rline=4;
-      RPTrace(&route,rpage,rline);
-      MouseOn(mouse);
+      if(route.npassenger>(rpage-1)*4+rline-1) {
+      	RPTrace(&route,rpage,rline);
+      	PuOne();
+      	Relevant(&route,rpage,user);
+      	DrawPage(rpage);
+	  }      
+	  MouseOn(mouse);
     }
   }
 }
@@ -1036,13 +1091,13 @@ void RSelectMaps()
   Bar1(904,708,1024,768,DARKGRAY24);
   Bar1(906,710,1022,766,LIGHTGRAY24);
   puthz(918,716,"返回",48,48,BLACK24);
-  puthz(917,715,"返回",48,48,BLACK24);
+  returnbut();
   for(i=0; i<4; i++) {
     Bar1(218,96+i*170,806,174+i*170,DARKGRAY24);
     Bar1(222,100+i*170,802,170+i*170,LIGHTGRAY24);
   }
-  puthz(223,113,"线路一",48,48,BLACK24);
-  puthz(222,112,"线路一",48,48,BLACK24);
+  puthz(223,113,"一路",48,48,BLACK24);
+  puthz(222,112,"一路",48,48,BLACK24);
   puthz(431,126,"刘家大湾",24,24,BLACK24);
   puthz(430,125,"刘家大湾",24,24,BLACK24);
   put_asc16_size(520,115,3,3,"(   )",BLACK24);
@@ -1057,8 +1112,8 @@ void RSelectMaps()
   	puthz(543,126+130,"内环线",24,24,BLACK24);
   	puthz(542,125+130,"内环线",24,24,BLACK24);*/
 
-  puthz(223,113+170,"线路三",48,48,BLACK24);
-  puthz(222,112+170,"线路三",48,48,BLACK24);
+  puthz(223,113+170,"二路",48,48,BLACK24);
+  puthz(222,112+170,"二路",48,48,BLACK24);
   puthz(431,126+170,"铜花山庄",24,24,BLACK24);
   puthz(430,125+170,"铜花山庄",24,24,BLACK24);
   put_asc16_size(535,115+170,3,3,"-->",BLACK24);
@@ -1068,8 +1123,8 @@ void RSelectMaps()
   puthz(719,126+170,"外",24,24,BLACK24);
   puthz(718,125+170,"外",24,24,BLACK24);
 
-  puthz(223,113+340,"线路四",48,48,BLACK24);
-  puthz(222,112+340,"线路四",48,48,BLACK24);
+  puthz(223,113+340,"三路",48,48,BLACK24);
+  puthz(222,112+340,"三路",48,48,BLACK24);
   puthz(431,126+340,"铜花山庄",24,24,BLACK24);
   puthz(430,125+340,"铜花山庄",24,24,BLACK24);
   put_asc16_size(535,115+340,3,3,"-->",BLACK24);
@@ -1079,8 +1134,8 @@ void RSelectMaps()
   puthz(719,126+340,"全",24,24,BLACK24);
   puthz(718,125+340,"全",24,24,BLACK24);
 
-  puthz(223,113+510,"线路五",48,48,BLACK24);
-  puthz(222,112+510,"线路五",48,48,BLACK24);
+  puthz(223,113+510,"四路",48,48,BLACK24);
+  puthz(222,112+510,"四路",48,48,BLACK24);
   puthz(431,126+510,"铜花山庄",24,24,BLACK24);
   puthz(430,125+510,"铜花山庄",24,24,BLACK24);
   put_asc16_size(535,115+510,3,3,"-->",BLACK24);
@@ -1111,7 +1166,7 @@ void AddBox1()
   Bar1(904,708,1024,768,DARKGRAY24);
   Bar1(906,710,1022,766,LIGHTGRAY24);
   puthz(918,716,"返回",48,48,BLACK24);
-  puthz(917,715,"返回",48,48,BLACK24);
+  returnbut();
 }
 
 
@@ -1147,6 +1202,7 @@ void StationName(int Sflag,int Station)
     {27,"牧羊湖"},
     {28,"袁仓"}
   };
+  
   if(Sflag==1) { //起点站
     Bar1(208,598,462,662,BLACK24);
     Bar1(212,602,458,658,LIGHTGRAY24);
@@ -1199,12 +1255,12 @@ void YNbut(int cho)
     Bar(692,589,742,639,DARKGRAY24);
     puthz(693,590,"否",48,48,GREEN24);
   } else if(cho==4) {
-  	Bar1(639,649,689,699,LIGHTGRAY24);
-    bar3(639,649,689,699,WHITE24);
-    puthz(640,650,"是",48,48,BLACK24);
+  	Bar1(739,649,789,699,LIGHTGRAY24);
+    bar3(739,649,789,699,WHITE24);
+    puthz(740,650,"是",48,48,BLACK24);
   } else if(cho==5) {
-    Bar(639,649,689,699,DARKGRAY24);
-    puthz(640,650,"是",48,48,RED24);
+    Bar(739,649,789,699,DARKGRAY24);
+    puthz(740,650,"是",48,48,RED24);
   }  
 }
 void AddBox3()
@@ -1230,16 +1286,72 @@ STATUS_CODE JudgeTime(char *year,char *month,char *day,int yi,int mi,int di)
     yk=yk*10+(year[i]-'0');
   }
   for(i=0; i<mi; i++) {
-    mk=mk*10+month[i]-'0';
+    mk=mk*10+(month[i]-'0');
   }
   for(i=0; i<mi; i++) {
-    dk=dk*10+day[i]-'0';
+    dk=dk*10+(day[i]-'0');
   }
   if(yk==2021 && ( (mk==4&&(dk>=1&&dk<=30)) || (mk==5&&(dk>=1&&dk<=4)) )) {
     return SUCCESS_CODE;
   } else {
     return ERROR_CODE;
   }
+}
+void Connect(char *year,char *month,char *day,char *time,char *route_name,char *bnum,int c,char *btime,int page,int line)
+{
+	int mi;
+	int di;
+	mi=strlen(month);
+	di=strlen(day);
+	if(c==1) {//连接根据用户记录的时间 
+		strcpy(time,year);
+        strcat(time,".");
+        strcat(time,month);
+        strcat(time,".");
+        strcat(time,day);
+	} else if(c==2) {//形成车次定位 
+		if(mi==1) {
+			strcpy(btime,"0");
+            strcat(btime,month);
+		} else if(mi==2) {
+			strcat(btime,month);
+		} 
+		if(di==1) {
+			strcat(btime,"0");
+			strcat(btime,day);
+		} else if(di==2) {
+			strcat(btime,day);
+		}
+		strcpy(route_name,btime);
+		
+		if(line==1) {
+			if(page==1) {
+				strcat(route_name,"a");
+			} else if(page==2) {
+				strcat(route_name,"b");
+			}
+		} else if(line==3) {
+			if(page==1) {
+				strcat(route_name,"e");
+			} else if(page==2) {
+				strcat(route_name,"f");
+			}
+		} else if(line==4) {
+			if(page==1) {
+				strcat(route_name,"h");
+			} else if(page==2) {
+				strcat(route_name,"i");
+			}
+		} else if(line==5) {
+			if(page==1) {
+				strcat(route_name,"m");
+			} else if(page==2) {
+				strcat(route_name,"n");
+			}
+		}
+		
+		strcat(route_name,bnum);
+	}
 }
 void AddHis(char *account, int line, UserInfo *user,int page)   //page==1正向page==2反向
 {
@@ -1252,6 +1364,7 @@ void AddHis(char *account, int line, UserInfo *user,int page)   //page==1正向pag
   char day[3];
   char bnum[4];
   char time[10];
+  char btime[16];
   char route_name[16];
   char note[64];
   HisLi temp;
@@ -1259,8 +1372,10 @@ void AddHis(char *account, int line, UserInfo *user,int page)   //page==1正向pag
   year[0] = '\0';
   month[0] = '\0';
   day[0] = '\0';
-  bnum[0]='\0';
+  bnum[0] = '\0';
   note[0] = '\0';
+  btime[0] = '\0'; 
+  route_name[0] = '\0';
   Bar1(0,560,1024,768,LIGHTGRAY24);
   AddBox1();
   Bar1(334,717,494,760,BLACK24);
@@ -1278,19 +1393,17 @@ void AddHis(char *account, int line, UserInfo *user,int page)   //page==1正向pag
         AddBox2();//添加时间
         Dflag++;
         delay(100);
+        MouseOn(mouse);
       } else if(Dflag==2) {
         MouseOff(&mouse);
         yi=strlen(year);
         mi=strlen(month);
         di=strlen(day);
         if(JudgeTime(year,month,day,yi,mi,di)==SUCCESS_CODE) {
-          strcpy(time,year);
-          strcat(time,".");
-          strcat(time,month);
-          strcat(time,".");
-          strcat(time,day);
-          strcpy(route_name,time);
-          strcat(route_name,bnum);
+          mi = strlen(month);
+		  di = strlen(day);
+		  Connect(year,month,day,time,route_name,bnum,1,btime,page,line);//生成时间 
+		  Connect(year,month,day,time,route_name,bnum,2,btime,page,line);//生成车次 日期+车号 
           AddBox3();//添加注释
           if(temp.note==1){
           	YNbut(2);
@@ -1300,16 +1413,17 @@ void AddHis(char *account, int line, UserInfo *user,int page)   //page==1正向pag
           Dflag++;
           delay(100);
         } else if(JudgeTime(year,month,day,yi,mi,di)==ERROR_CODE) {
-          InputError(line,start,end,1);
+          InputError(line,start,end,1); 
         }
+        MouseOn(mouse);
       }
     } else if(MousePress(332,716,492,758)) {
       if(Dflag==3) {
         AddBox2();
-        put_asc16_size(149,643,2,2,year,BLACK24);
-        put_asc16_size(337,643,2,2,month,BLACK24);
-        put_asc16_size(494,643,2,2,day,BLACK24);
-        put_asc16_size(653,643,2,2,bnum,BLACK24);
+        put_asc16_size(149,641,2,2,year,BLACK24);
+        put_asc16_size(337,641,2,2,month,BLACK24);
+        put_asc16_size(494,641,2,2,day,BLACK24);
+        put_asc16_size(653,64,2,2,bnum,BLACK24);
         Dflag--;
         delay(100);
       } else if(Dflag==2) {
@@ -1317,23 +1431,27 @@ void AddHis(char *account, int line, UserInfo *user,int page)   //page==1正向pag
         Dflag--;
         delay(100);
       }
-    } else if(MousePress(212,602,458,658)&&Dflag==1) {
+    } else if(MousePress(212,602,458,658) && Dflag==1 && start==0) {
       MouseOff(&mouse);
       start=ClickStation(335,658);
       Bar1(212,663,458,713,LIGHTGRAY24);
 
-      StationName(1,start);
+      if(start!=0) {
+      	StationName(1,start);
+	  }
 
       if(start!=0&&end!=0) {
         DisplayTraces(line,start,end);
       }
       MouseOn(mouse);
-    } else if(MousePress(566,602,812,658)&&Dflag==1) {
+    } else if(MousePress(566,602,812,658) && Dflag==1 && end==0) {
       MouseOff(&mouse);
       end=ClickStation(689,658);
       Bar1(566,663,812,713,LIGHTGRAY24);
-
-      StationName(2,end);
+      
+      if(end!=0) {
+      	StationName(2,end);
+	  }
 
       if(start!=0&&end!=0) {
         DisplayTraces(line,start,end);
@@ -1341,6 +1459,7 @@ void AddHis(char *account, int line, UserInfo *user,int page)   //page==1正向pag
       MouseOn(mouse);
     } else if(MousePress(906,710,1022,766)) {
       Maps();
+      NextPage();
       Dflag=1;
       break;
     } else if(MousePress(145,642,275,692)&&Dflag==2) {
@@ -1361,19 +1480,21 @@ void AddHis(char *account, int line, UserInfo *user,int page)   //page==1正向pag
     } else if(MousePress(649,642,810,692)&&Dflag==2) {
       MouseOff(&mouse);
       bi=strlen(bnum);
-      Getinfo(653,643,bnum,4,bi);
+      Getnum(653,643,bnum,2,bi);
       MouseOn(mouse);
     }  else if(MousePress(639,589,689,639)&&Dflag==3) {
       MouseOff(&mouse);
       YNbut(2);
       temp.note=1;
+      YNbut(4);
       MouseOn(mouse);
-    } else if(MousePress(692,589,742,639)&&Dflag==3&&temp.note!=2) {
+    } else if(MousePress(692,589,742,639)&&Dflag==3) {
       MouseOff(&mouse);
       YNbut(3);
       temp.note=0;
+      YNbut(4);
       MouseOn(mouse);
-    } else if(MousePress(639,649,689,699)&&Dflag==3&&temp.note!=2) {
+    } else if(MousePress(739,649,789,699)&&Dflag==3) {
       MouseOff(&mouse);
       YNbut(5);
       YNbut(1);
@@ -1385,8 +1506,9 @@ void AddHis(char *account, int line, UserInfo *user,int page)   //page==1正向pag
       temp.line_no=line;
       temp.start=start;
       temp.end=end;
-      strcpy(temp.busnum,bnum);
+      strcpy(temp.busnum,route_name);
 	  UserNewTravel(account, &temp, user);
+	  delay(100); 
 	  RouteNewPassenger(line,route_name,&temp,user->name);
       Maps();
       NextPage();
@@ -1434,6 +1556,7 @@ void AddFunc(UserInfo *user)
       line=1;
       DisplayLine(line);
       AddHis(user->account, line, user, page);
+      page=1;
       MouseOn(mouse);
     }
     /*	else if(MousePress(218,226,806,304))
@@ -1448,18 +1571,21 @@ void AddFunc(UserInfo *user)
       line=3;
       DisplayLine(line);
       AddHis(user->account, line, user, page);
+      page=1;
       MouseOn(mouse);
     } else if(MousePress(218,96+340,806,174+340)) {
       MouseOff(&mouse);
       line=4;
       DisplayLine(line);
       AddHis(user->account, line, user, page);
+      page=1;
       MouseOn(mouse);
     } else if(MousePress(218,96+510,806,174+510)) {
       MouseOff(&mouse);
       line=5;
       DisplayLine(line);
       AddHis(user->account, line, user, page);
+      page=1;
       MouseOn(mouse);
     } else if(MousePress(437,710,587,766)) {
       MouseOff(&mouse);
@@ -1488,6 +1614,8 @@ STATUS_CODE SelectMap()
     MouseShow(&mouse);
     if(MousePress(218,96,806,174)) {
       MouseOff(&mouse);
+      Bar1(0,0,1024,768,DARKCYAN24); 
+      returnbut();
       DisplayLine(1);
       ShowSta(1);
       Maps();
@@ -1502,18 +1630,24 @@ STATUS_CODE SelectMap()
     		}*/
     else if(MousePress(218,96+170,806,174+170)) {
       MouseOff(&mouse);
+      Bar1(0,0,1024,768,DARKCYAN24);
+      returnbut();
       DisplayLine(3);
       ShowSta(3);
       Maps();
       MouseOn(mouse);
     } else if(MousePress(218,96+340,806,174+340)) {
       MouseOff(&mouse);
+      Bar1(0,0,1024,768,DARKCYAN24);
+      returnbut();
       DisplayLine(4);
       ShowSta(4);
       Maps();
       MouseOn(mouse);
     } else if(MousePress(218,96+510,806,174+510)) {
       MouseOff(&mouse);
+      Bar1(0,0,1024,768,DARKCYAN24);
+      returnbut();
       DisplayLine(5);
       ShowSta(5);
       Maps();

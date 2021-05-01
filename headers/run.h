@@ -36,19 +36,22 @@ STATUS_CODE DrawRunWindow(UserInfo *user);
 STATUS_CODE DisplayLine(int line);
 
 STATUS_CODE SelectMap();
-
+/*
+function AddFunc:
+   
+*/ 
 void AddFunc(UserInfo *user);
 void AddHis(char *account, int line, UserInfo *user,int page); 
 void AddBox3(void);
 void AddBox2(void);
-void Stak(int line,int x,int y);
+void Stak(int line,int x,int y,int func,int note);
 void ShowSta(int line);
 void StationName(int Sflag,int Station);
 void AddBox1(void);
 void RSelectMaps(void);
 void HisBoxFunc(UserInfo *user);
 void Hisbox(int page,UserInfo *user);
-void Relevant(Route *route,int page);
+void Relevant(Route *route,int rpage,UserInfo *user);
 STATUS_CODE DrawMainPage();
 STATUS_CODE DisplayLine(int line);
 char *CalcMapName(char *path, int line);
@@ -65,8 +68,11 @@ void RelevantF(int page,int line,UserInfo *user);
 STATUS_CODE JudgeTime(char *year,char *month,char *day,int yi,int mi,int di);
 void InputError(int line,int start,int end,int k);
 void RecordFunc(UserInfo *user,int page,int line);
-void RecordTrace(UserInfo *user,int page,int line,int c); 
+void RecordTrace(UserInfo *user,int page,int line,int c);
+void RecordBox(int i); 
 void YNbut(int cho);
 void InfoName(int c,int i);
 void InfoN(int c,int i);
+void returnbut(void);
+void Connect(char *year,char *month,char *day,char *time,char *route_name,char *bnum,int c,char *btime,int page,int line);
 #endif
