@@ -100,10 +100,9 @@ void SPeople(int x,int y)
     }
   }
   puthz(x+40,y-24,"用户",48,48,BLACK24);
-  put_asc16_size(x+150,y-24,3,3,name,BLACK24);
 }
 
-void ShUsers()
+void ShUsers(char users[][16])
 {
   int i;
   int j;
@@ -117,6 +116,7 @@ void ShUsers()
         Bar1(113+j*400,132+i*60,509+j*400,188+i*60,LIGHTGRAY24);
 
         SPeople(140+j*400,160+60*i);
+		put_asc16_size(300+j*400,136+60*i,3,3,users[i+j*8],BLACK24);
 	  }
   } 
 }
@@ -470,6 +470,7 @@ void ByBusNum()
   char month[3];
   char day[3];
   char time[10];
+  char btime[10];
   char bnum[4];
   char route_name[16];
   Route route;
@@ -478,6 +479,7 @@ void ByBusNum()
   month[0] = '\0';
   day[0] = '\0';
   bnum[0] = '\0';
+  btime[0] = '\0';
   ByBusOne();
   Mouse_Init();
   while(1) {
@@ -508,24 +510,18 @@ void ByBusNum()
 	} else if(MousePress(218,96,806,174)&&Bflag==1) {
 	  line=1;
 	} else if(MousePress(218,96+170,806,174+170)&&Bflag==1) {
-		line=3;
+	  line=3;
 	} else if(MousePress(218,96+340,806,174+340)&&Bflag==1) {
-		line=4;
+	  line=4;
 	} else if(MousePress(218,96+510,806,174+510)&&Bflag==1) {
-		line=5;
+      line=5;
 	} else if(MousePress(862,606,962,656)&&Bflag==1) {
 		MouseOff(&mouse);
 		yi=strlen(year);
 		mi=strlen(month);
 		di=strlen(day);
 		if(JudgeTime(year,month,day,yi,mi,di)==SUCCESS_CODE) {
-		  strcpy(time,year);
-		  strcat(time,".");
-		  strcat(time,month);
-		  strcat(time,".");
-		  strcat(time,day);
-		  strcpy(route_name,time);
-		  strcat(route_name,bnum);
+		  Connect(year,month,day,time,route_name,bnum,3,btime,0,0);
           ReadRoute(&route,route_name);
           delay(100);
           ByBusF(&route,line);
@@ -645,15 +641,32 @@ void UseHisF(UserInfo *user)
       }
   }
 }
+
+void FetchAllAccount(char acc[][16]){
+	FILE *fp;
+	int cnt,len;
+	cnt = 0;
+	memset(acc, 0, sizeof(acc));
+	fp = fopen("userinfo/account.txt","rt");
+	
+	while(fgets(acc[cnt], 16, fp) != NULL){
+		len = strlen(acc[cnt]);
+		acc[cnt][len-1] = '\0';
+		cnt++;
+	}
+	fclose(fp);
+	fp = NULL;
+}
+
 void ByUser()
 {
   int page=1;
   int line=0;
   UserInfo user;
   char user_account[100][16];
-  //char user_account;////////////////所有用户的合集 
+  FetchAllAccount(user_account);
   PuOne();
-  ShUsers();
+  ShUsers(user_account);
   DrawPage(page);
   Mouse_Init();
   while (1) {
@@ -662,36 +675,36 @@ void ByUser()
       if(page==1) {
         page=2;
         DrawPage(page);
-        ShUsers();
+        ShUsers(user_account);
         delay(100);
       } else if(page==2) {
         page=3;
         DrawPage(page);
-        ShUsers();
+        ShUsers(user_account);
         delay(100);
       } else if(page==3) {
         page=4;
         DrawPage(page);
-        ShUsers();
+        ShUsers(user_account);
         delay(100);
       }
     } else if(MousePress(350,619,450,659)) {
       if(page==2) {
         page=1;
         DrawPage(page);
-        ShUsers();
+        ShUsers(user_account);
         delay(100);
       } else
 
         if(page==3) {
           page=2;
           DrawPage(page);
-          ShUsers();
+          ShUsers(user_account);
           delay(100);
         } else if(page==4) {
           page=3;
           DrawPage(page);
-          ShUsers();
+          ShUsers(user_account);
           delay(100);
         }
     } else if(MousePress(113,132,509,188)) {
@@ -701,7 +714,7 @@ void ByUser()
       UseHisF(&user);
       PuOne();
       DrawPage(page);
-      ShUsers();//查询当页第一列第一条记录
+      ShUsers(user_account);//查询当页第一列第一条记录
     } else if(MousePress(113,192,509,248)) {
       MouseOff(&mouse);
       line==2;
@@ -709,104 +722,104 @@ void ByUser()
 	  UseHisF(&user);
       PuOne();
       DrawPage(page);
-      ShUsers();//查询当页第一列第二条记录
+      ShUsers(user_account);//查询当页第一列第二条记录
     } else if(MousePress(113,252,509,308)) {
       MouseOff(&mouse);
       GetUserInfo(&user, user_account);
       UseHisF(&user);
       PuOne();
       DrawPage(page);
-      ShUsers();//查询当页第一列第三条记录
+      ShUsers(user_account);//查询当页第一列第三条记录
     } else if(MousePress(113,312,509,368)) {
       MouseOff(&mouse);
       GetUserInfo(&user, user_account);
       UseHisF(&user);
       PuOne();
       DrawPage(page);
-      ShUsers();//查询当页第一列第四条记录
+      ShUsers(user_account);//查询当页第一列第四条记录
     } else if(MousePress(113,372,509,428)) {
       MouseOff(&mouse);
       GetUserInfo(&user, user_account);
       UseHisF(&user);
       PuOne();
       DrawPage(page);
-      ShUsers();//查询当页第一列第五条记录
+      ShUsers(user_account);//查询当页第一列第五条记录
     } else if(MousePress(113,432,509,488)) {
       MouseOff(&mouse);
       GetUserInfo(&user, user_account);
       UseHisF(&user);
       PuOne();
       DrawPage(page);
-      ShUsers();//查询当页第一列第六条记录
+      ShUsers(user_account);//查询当页第一列第六条记录
     } else if(MousePress(113,492,509,548)) {
       MouseOff(&mouse);
       GetUserInfo(&user, user_account);
       UseHisF(&user);
       PuOne();
-      ShUsers();//查询当页第一列第七条记录
+      ShUsers(user_account);//查询当页第一列第七条记录
     } else if(MousePress(113,552,509,608)) {
       MouseOff(&mouse);
       GetUserInfo(&user, user_account);
       UseHisF(&user);
       PuOne();
       DrawPage(page);
-      ShUsers();//查询当页第一列第八条记录
+      ShUsers(user_account);//查询当页第一列第八条记录
     } else if(MousePress(515,132,911,188)) {
       MouseOff(&mouse);
       GetUserInfo(&user, user_account);
       UseHisF(&user);
       PuOne();
       DrawPage(page);
-      ShUsers();//查询当页第二列第一条记录
+      ShUsers(user_account);//查询当页第二列第一条记录
     } else if(MousePress(515,192,911,248)) {
       MouseOff(&mouse);
       GetUserInfo(&user, user_account);
       UseHisF(&user);
       PuOne();
       DrawPage(page);
-      ShUsers();//查询当页第二列第二条记录
+      ShUsers(user_account);//查询当页第二列第二条记录
     } else if(MousePress(515,252,911,308)) {
       MouseOff(&mouse);
       GetUserInfo(&user, user_account);
       UseHisF(&user);
       PuOne();
       DrawPage(page);
-      ShUsers();//查询当页第二列第三条记录
+      ShUsers(user_account);//查询当页第二列第三条记录
     } else if(MousePress(515,312,911,368)) {
       MouseOff(&mouse);
       GetUserInfo(&user, user_account);
       UseHisF(&user);
       PuOne();
       DrawPage(page);
-      ShUsers();//查询当页第二列第四条记录
+      ShUsers(user_account);//查询当页第二列第四条记录
     } else if(MousePress(515,372,911,428)) {
       MouseOff(&mouse);
       GetUserInfo(&user, user_account);
       UseHisF(&user);
       PuOne();
       DrawPage(page);
-      ShUsers();//查询当页第二列第五条记录
+      ShUsers(user_account);//查询当页第二列第五条记录
     } else if(MousePress(515,432,911,488)) {
       MouseOff(&mouse);
       GetUserInfo(&user, user_account);
       UseHisF(&user);
       PuOne();
       DrawPage(page);
-      ShUsers();//查询当页第二列第六条记录
+      ShUsers(user_account);//查询当页第二列第六条记录
     } else if(MousePress(515,492,911,548)) {
       MouseOff(&mouse);
       GetUserInfo(&user, user_account);
       UseHisF(&user);
       PuOne();
       DrawPage(page);
-      ShUsers();//查询当页第二列第七条记录
+      ShUsers(user_account);//查询当页第二列第七条记录
     } else if(MousePress(515,552,911,608)) {
       MouseOff(&mouse);
-      GetUserInfo(&user, user_account);
+	  GetUserInfo(&user, user_account);
       UseHisF(&user);
       PuOne();
       DrawPage(page);
-      ShUsers();//查询当页第二列第八条记录
+      ShUsers(user_account);//查询当页第二列第八条记录
     } else if(MousePress(906,710,1022,766)) {
       MouseOff(&mouse);
       AChoose();

@@ -1,7 +1,6 @@
 #ifndef TRAFFIC_HEADERS_RUN_H_
 #define TRAFFIC_HEADERS_RUN_H_
 #include "headers/status.h"
-
 /*
 function RunFunc:
     传入参数: 无
@@ -44,9 +43,9 @@ void AddFunc(UserInfo *user);
 void AddHis(char *account, int line, UserInfo *user,int page); 
 void AddBox3(void);
 void AddBox2(void);
-void Stak(int line,int x,int y,int func,int note);
+int Stak(int line,int x,int y,int func,int note,int Sflag,int lim);
 void ShowSta(int line);
-void StationName(int Sflag,int Station);
+void StationName(int Sflag,int Station,char *name);
 void AddBox1(void);
 void RSelectMaps(void);
 void HisBoxFunc(UserInfo *user);
@@ -69,10 +68,13 @@ STATUS_CODE JudgeTime(char *year,char *month,char *day,int yi,int mi,int di);
 void InputError(int line,int start,int end,int k);
 void RecordFunc(UserInfo *user,int page,int line);
 void RecordTrace(UserInfo *user,int page,int line,int c);
+void RPTrace(Route *route,int page,int line);
 void RecordBox(int i); 
 void YNbut(int cho);
 void InfoName(int c,int i);
 void InfoN(int c,int i);
 void returnbut(void);
 void Connect(char *year,char *month,char *day,char *time,char *route_name,char *bnum,int c,char *btime,int page,int line);
+void StakInfo(int x,int y,char *name);
+void StakInput(int func,char *name,int station,int x,int y,int Sflag);
 #endif

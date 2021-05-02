@@ -11,7 +11,7 @@ typedef struct inputstations
 void DrawPage(int page);
 void PuOne(void);
 void SPeople(int x,int y);
-void ShUsers(void);
+void ShUsers(char user[][16]);
 void UserHis(UserInfo *user,int page);
 void ByBusOne(void);
 void AChoose(void);

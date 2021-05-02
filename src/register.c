@@ -180,20 +180,6 @@ void RegFunc()
   password2[0] = '\0';
   name[0] = '\0';
   Bar1(0,0,1024,768,0x03ef);
-  /*	setfillstyle(1,BLUE);
-  	pieslice(320,60,0,360,35);
-  	setcolor(BLUE);
-  	line(320,60,354,60);
-  	setfillstyle(1, WHITE);
-  	sector(320, 60, 230, 310, 35, 35);
-  	fillellipse(320, 60 - 5, 15, 15);
-  	setcolor(WHITE);
-  	circle(320, 60 - 5, 15);	//锟斤拷锟斤拷录小锟斤拷
-  	setlinestyle(0,0,3);
-  	circle(320,60,35);
-  	setcolor(DARKGRAY);
-  	setlinestyle(0,0,3);
-  	setfillstyle(1,DARKGRAY);*/
   Bar1(202,172,826,232,0x7bef);
   Bar1(202,272,826,332,0x7bef);
   Bar1(202,372,826,432,0x7bef);
@@ -290,13 +276,12 @@ void RegFunc()
       break;
     }
   }
-}
+} 
 
-void DrawEntryWindow()
+void DrawBus()
 {
-  int i;
+	int i;
 
-  Bar1(0,0,1024,768,0x03ef);
   Bar1(162,70,862,320,0x8b45);
 
   Bar1(172,120,302,180,0x07ff);
@@ -336,6 +321,12 @@ void DrawEntryWindow()
     Line1(234+i*250,120,234+i*250,180,0xffff);
     Line1(236+i*250,120,236+i*250,180,0xffff);
   }
+ } 
+void DrawEntryWindow()
+{
+
+  Bar1(0,0,1024,768,0x03ef);
+  DrawBus();
   puthz(418,402,"欢迎使用",48,48,0x7bef);
   puthz(276,492,"公共交通乘客行程系统",48,48,0x7bef);
   puthz(416,400,"欢迎使用",48,48,0xffe0);
@@ -356,50 +347,10 @@ void DrawEntryWindow()
   }
 void Sign_in()
 {
-
-  char account[32],password[32],user_account[32];
-  int i;
+  //char account[32],password[32],user_account[32];
 
   Bar1(0,0,1024,768,0x03ef);
-  Bar1(162,70,862,320,0x8b45);
-
-  Bar1(172,120,302,180,0x07ff);
-  Bar1(422,120,552,180,0x07ff);
-  Bar1(672,120,802,180,0x07ff);
-
-  bar3(162,70,862,320,0xffe0);
-  bar3(160,68,864,322,0xffe0);
-  Bar1(152,260,175,285,0x7800);
-  Bar1(849,260,871,285,0x7800);
-  Bar1(850,115,875,135,0x8b45);
-  Bar1(875,115,900,175,0x8b45);
-  Bar1(835,72,860,200,0x07ff);
-  Line1(835,72,835,200,0xffff);
-  Line1(835,200,860,200,0xffff);
-  Line1(834,72,834,201,0xffff);
-  Line1(834,201,860,201,0xffff);
-  Line1(836,73,836,199,0xffff);
-  Line1(836,199,860,199,0xffff);
-  Circlefill(250,320,50,0x0000);
-  Circlefill(774,320,50,0x0000);
-  Circlefill(250,320,40,0xc618);
-  Circlefill(774,320,40,0xc618);
-  Circlefill(250,320,20,0x7bef);
-  Circlefill(774,320,20,0x7bef);
-
-  for(i=0; i<2; i++) {
-    bar3(322+i*250,110,402+i*250,290,0xffe0);
-    Circlefill(362+i*250,150,20,0x07ff);
-    Circle(362+i*250,150,20,0xfde0);
-    Circle(362+i*250,150,21,0xfde0);
-    Circle(362+i*250,150,19,0xfde0);
-  }
-  for(i=0; i<3; i++) {
-    bar3(172+i*250,120,302+i*250,180,0xffff);
-    Line1(235+i*250,120,235+i*250,180,0xffff);
-    Line1(234+i*250,120,234+i*250,180,0xffff);
-    Line1(236+i*250,120,236+i*250,180,0xffff);
-  }
+  DrawBus();
   Bar1(0,400,1024,740,0x03ef);
   Bar1(200,420,824,480,0xffff);
   bar3(200,420,824,480,0x0000);
@@ -429,6 +380,92 @@ void Sign_in()
   puthz(462,646,"登录",48,48,0xffff);
 }
 
+void AdSign()
+{
+  int i,ai,bi;
+   
+  Bar1(0,0,1024,768,0x03ef);
+  DrawBus();
+  Bar1(0,400,1024,740,0x03ef);
+  Bar1(200,420,824,480,0xffff);
+  bar3(200,420,824,480,0x0000);
+  Line1(330,420,330,480,0x0000);
+  Line1(331,420,331,480,0x0000);
+  Line1(329,420,329,480,0x0000);
+  Bar1(200,520,824,580,0xffff);
+  bar3(200,520,824,580,0x0000);
+  Line1(330,520,330,580,0x0000);
+  Line1(331,520,331,580,0x0000);
+  Line1(329,520,329,580,0x0000);
+  puthz(230,436,"账号",32,48,0x7bef);
+  puthz(229,435,"账号",32,48,0x0000);
+  puthz(230,536,"密码",32,48,0x7bef);
+  puthz(229,535,"密码",32,48,0x0000);
+  Bar1(212,642,362,702,0x7bef);
+  Bar1(210,640,360,700,0xf800);
+  Bar1(662,642,812,702,0x7bef);
+  Bar1(660,640,810,700,0xc618);
+  puthz(238,647,"登录",48,48,0x0000);
+  puthz(237,646,"登录",48,48,0xffff);
+  puthz(688,647,"退出",48,48,0x0000);
+  puthz(687,646,"退出",48,48,0x7800);
+}
+void Nopermis()
+{
+  Bar1(362,400,662,550,LIGHTGRAY24);
+  bar3(362,400,662,550,BLACK24);
+  puthz(422,430,"无权限",48,60,RED24);
+  Bar1(462,495,562,545,CYAN24);
+  bar3(462,495,562,545,BLACK24);
+  puthz(464,496,"确认",48,48,BLACK24);
+  Mouse_Init();
+  while(1) {
+  	MouseShow(&mouse);
+  	if(MousePress(462,495,562,545)) {
+  		MouseOff(&mouse);
+  		break;
+	  }
+  } 
+}
+void RSign_in()
+{
+  char ai,pi;
+  char account[32],password[32];
+  account[0] = '\0';
+  password[0] = '\0';
+  AdSign();
+  while(1) {
+  	MouseShow(&mouse);
+  	if(MousePress(350,520,824,580)) {
+      delay(100);
+      MouseOff(&mouse);
+      pi=strlen(password);
+      Getcode(353,530,password,16,pi);
+      MouseOn(mouse);
+      //密码输入
+    } else if(MousePress(350,420,824,480)) {
+      delay(100);
+      MouseOff(&mouse);
+      ai=strlen(account);
+      Getinfo(353,430,account,16,ai);
+      MouseOn(mouse);
+      //账号输入
+    } else if(MousePress(660,640,810,700)) {
+      MouseOff(&mouse);	
+      break;  
+	} else if(MousePress(210,640,360,700)) {
+	  MouseOff(&mouse);	
+	  if(strcmp(account,"shhwsy")==0&&strcmp(password,"shhwsy")==0) {
+	  	AdminiFunc();
+	  }	else if(strcpy(account,"shhwsy")!=0&&(password,"shhwsy")!=0) {
+	  	Nopermis();
+	  	AdSign();
+	  	account[0] = '\0';
+	  	password[0] = '\0';
+	  }
+	}
+  }
+}
 STATUS_CODE RegisterFunc(char *user_account)
 {
   int flagc=0,ai,pi;
@@ -442,21 +479,22 @@ STATUS_CODE RegisterFunc(char *user_account)
     MouseShow(&mouse);
     if(MousePress(102,642,348,718)&&flagc==0) {
       MouseOff(&mouse);
-      delay(50);
-      Sign_in();//管理员
-      flagc=1;
-      delay(50);
+      delay(100);
+      RSign_in();//管理员
+      DrawEntryWindow();
+      flagc=1;/////////////////////////////////////////
+      delay(100);
       MouseOn(mouse);
     } else if(MousePress(676,642,922,718)&&flagc==0) {
       MouseOff(&mouse);
-      delay(50);
+      delay(100);
       Sign_in();//乘客
       flagc=1;
-      delay(50);
+      delay(100);
       MouseOn(mouse);
     } else if(MousePress(210,640,360,700)&&flagc==1) {
       MouseOff(&mouse);
-      delay(50);
+      delay(100);
       RegFunc();
       account[0] = '\0';
       password[0] = '\0';

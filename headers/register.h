@@ -27,6 +27,10 @@ function RegisterFunc:
 STATUS_CODE RegisterFunc(char *user_account);
 void JWrong(int x,int y);
 void JRight(int x,int y);
+void RSign_in(void);
+void Nopermis(void);
+void Adsign(void);
+void DrawBus(void);;
 
 
 #endif
