@@ -1,29 +1,21 @@
-#include "headers/info.h"
-#include "headers/userdata.h"
-#include "headers/status.h"
-#include "headers/hz.h"
-#include "headers/mouse.h"
-#include "headers/draw.h"
-#include "headers/stafunc.h"
-#include "headers/recordop.h"
-#include "headers/add.h"
-#include "headers/relevant.h"
-#include "headers/judge.h"
-#include "headers/admini.h"
-#include "headers/run.h"
-#include "headers/register.h"
-#include "headers/hisbox.h"
-#include <graphics.h>
 #include <stdio.h>
-#include <conio.h>
-#include <bios.h>
-#include <dos.h>
+#include <graphics.h>
 #include <stdlib.h>
 #include <string.h>
+#include "headers/info.h"
+#include "headers/putbmp.h"
+#include "headers/status.h"
+#include "headers/traveldata.h"
+#include "headers/userdata.h"
+#include "headers/mouse.h"
+#include "headers/run.h"
+#include "headers/admini.h"
+#include "headers/hz.h"
+#include "headers/svga.h"
 
 
 
-/*void DrawPage(int page)
+void DrawPage(int page)
 {
   Bar1(484,620,570,670,DARKCYAN24);
   if(page==1) {
@@ -35,8 +27,8 @@
   } else if(page==4) {
     put_asc16_size(485,115+510,2,2,"4/4",BLACK24);
   }
-}*/
-/*void PuOne()
+}
+void PuOne()
 {
   Bar1(0,0,1024,768,CYAN24);
   Bar1(110,120,914,670,DARKCYAN24);
@@ -50,7 +42,7 @@
   Bar1(906,710,1022,766,LIGHTGRAY24);
   puthz(918,716,"·µ»Ø",48,48,BLACK24);
   puthz(917,715,"·µ»Ø",48,48,BLACK24);
-}*/
+}
 /*void DisPlayR()
 {
   int i,rows;

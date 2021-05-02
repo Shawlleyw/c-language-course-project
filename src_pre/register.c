@@ -3,16 +3,6 @@
 #include "headers/status.h"
 #include "headers/hz.h"
 #include "headers/mouse.h"
-#include "headers/draw.h"
-#include "headers/stafunc.h"
-#include "headers/recordop.h"
-#include "headers/add.h"
-#include "headers/relevant.h"
-#include "headers/judge.h"
-#include "headers/admini.h"
-#include "headers/run.h"
-#include "headers/register.h"
-#include "headers/hisbox.h"
 #include <graphics.h>
 #include <stdio.h>
 #include <conio.h>
@@ -21,7 +11,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*
 void JRight(int x,int y)
 {
   Circlefill(x,y,25,GREEN24);
@@ -35,7 +24,7 @@ void JWrong(int x,int y)
   Circle(x,y,25,BLACK24);
   Line_Thick(x-15,y-15,x+15,y+15,3,BLACK24);
   Line_Thick(x+15,y-15,x-15,y+15,3,BLACK24);
-}*/
+}
 STATUS_CODE CheckEntryPwd(int uid, char *passwd, FILE *passwd_fp)
 {
   int user_cnt;
@@ -289,7 +278,7 @@ void RegFunc()
   }
 } 
 
-/*void DrawBus()
+void DrawBus()
 {
 	int i;
 
@@ -332,8 +321,8 @@ void RegFunc()
     Line1(234+i*250,120,234+i*250,180,0xffff);
     Line1(236+i*250,120,236+i*250,180,0xffff);
   }
- } */
-/*void DrawEntryWindow()
+ } 
+void DrawEntryWindow()
 {
 
   Bar1(0,0,1024,768,0x03ef);
@@ -355,8 +344,8 @@ void RegFunc()
   bar3(970,2,1022,54,WHITE24);
   Line_Thick(971,3,1021,53,2,WHITE24);
   Line_Thick(971,53,1021,3,2,WHITE24);
-  }*/
-/*void Sign_in()
+  }
+void Sign_in()
 {
   //char account[32],password[32],user_account[32];
 
@@ -389,9 +378,9 @@ void RegFunc()
   puthz(687,646,"退出",48,48,0x7800);
   puthz(463,647,"登录",48,48,0x0000);
   puthz(462,646,"登录",48,48,0xffff);
-}*/
+}
 
-/*void AdSign()
+void AdSign()
 {
   int i,ai,bi;
    
@@ -420,7 +409,7 @@ void RegFunc()
   puthz(237,646,"登录",48,48,0xffff);
   puthz(688,647,"退出",48,48,0x0000);
   puthz(687,646,"退出",48,48,0x7800);
-}*/
+}
 void Nopermis()
 {
   Bar1(362,400,662,550,LIGHTGRAY24);
@@ -445,7 +434,6 @@ void RSign_in()
   account[0] = '\0';
   password[0] = '\0';
   AdSign();
-  Mouse_Init();
   while(1) {
   	MouseShow(&mouse);
   	if(MousePress(350,520,824,580)) {
@@ -469,13 +457,9 @@ void RSign_in()
 	  MouseOff(&mouse);	
 	  if(strcmp(account,"shhwsy")==0&&strcmp(password,"shhwsy")==0) {
 	  	AdminiFunc();
-	  	AdSign();
-	  	account[0] = '\0';
-	  	password[0] = '\0';
 	  }	else if(strcpy(account,"shhwsy")!=0&&(password,"shhwsy")!=0) {
 	  	Nopermis();
 	  	AdSign();
-	  	MouseOff(&mouse);
 	  	account[0] = '\0';
 	  	password[0] = '\0';
 	  }
@@ -496,11 +480,9 @@ STATUS_CODE RegisterFunc(char *user_account)
     if(MousePress(102,642,348,718)&&flagc==0) {
       MouseOff(&mouse);
       delay(100);
-      MouseOn(mouse);
       RSign_in();//管理员
       DrawEntryWindow();
-      MouseOff(&mouse); 
-      flagc=0;/////////////////////////////////////////
+      flagc=1;/////////////////////////////////////////
       delay(100);
       MouseOn(mouse);
     } else if(MousePress(676,642,922,718)&&flagc==0) {

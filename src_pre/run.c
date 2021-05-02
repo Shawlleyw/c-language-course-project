@@ -1,34 +1,26 @@
-#include "headers/info.h"
-#include "headers/userdata.h"
-#include "headers/status.h"
-#include "headers/hz.h"
-#include "headers/mouse.h"
-#include "headers/draw.h"
-#include "headers/stafunc.h"
-#include "headers/recordop.h"
-#include "headers/add.h"
-#include "headers/relevant.h"
-#include "headers/judge.h"
-#include "headers/admini.h"
-#include "headers/run.h"
-#include "headers/register.h"
-#include "headers/hisbox.h"
-#include <graphics.h>
 #include <stdio.h>
-#include <conio.h>
-#include <bios.h>
-#include <dos.h>
+#include <graphics.h>
 #include <stdlib.h>
 #include <string.h>
+#include "headers/info.h"
+#include "headers/putbmp.h"
+#include "headers/status.h"
+#include "headers/traveldata.h"
+#include "headers/userdata.h"
+#include "headers/mouse.h"
+#include "headers/admini.h"
+#include "headers/hz.h"
+#include "headers/svga.h"
+#include "headers/run.h"
 
 
-/*void NextPage()
+void NextPage()
 {
-  Bar1(375,708,649,768,DARKGRAY24);
-  Bar1(377,710,647,766,LIGHTGRAY24);
-  puthz(385,723,"点击录入反向路线",32,32,BLACK24);
-  puthz(384,722,"点击录入反向路线",32,32,BLACK24);
-}*/
+  Bar1(435,708,589,768,DARKGRAY24);
+  Bar1(437,710,587,766,LIGHTGRAY24);
+  puthz(441,716,"下一页",48,48,BLACK24);
+  puthz(440,715,"下一页",48,48,BLACK24);
+}
 int CheckRound(char *name){
 	int i, len;
 	len = strlen(name);
@@ -50,7 +42,7 @@ int CheckRev(char *name){
 		}
 	}
 }
-/*void Maps()
+void Maps()
 {
   int i;
   Bar1(0,0,1024,768,DARKCYAN24);
@@ -102,7 +94,7 @@ int CheckRev(char *name){
   put_asc16_size(695,115+170*3,3,3,"( )",BLACK24);
   puthz(719,126+170*3,"内",24,24,BLACK24);
   puthz(718,125+170*3,"内",24,24,BLACK24);
-}*/
+}
 
 
 STATUS_CODE GetUserInfo(UserInfo *user, char *user_account)
@@ -159,7 +151,7 @@ void DrawStart(int start)
   CalcStationPath(path, start);
   fp = fopen(path, "rb");
   fread(&cur, sizeof(Sta), 1, fp);
-  Circlefill(cur.x,cur.y,9,LIGHTRED24);
+  Circlefill(cur.x,cur.y,12,LIGHTRED24);
   fclose(fp);
   fp = NULL;
 }
@@ -171,7 +163,7 @@ void DrawEnd(int end)
   CalcStationPath(path, end);
   fp = fopen(path, "rb");
   fread(&cur, sizeof(Sta), 1, fp);
-  Circlefill(cur.x,cur.y,9,LIGHTRED24);
+  Circlefill(cur.x,cur.y,12,LIGHTRED24);
   fclose(fp);
   fp = NULL;
 
@@ -254,7 +246,7 @@ STATUS_CODE DisplayTraces(int line, int start, int end, int rev, int round)
 }
 
 
-/*void Comfirm(int x,int y)
+void Comfirm(int x,int y)
 {
   Circlefill(x-40,y+30,20,GREEN24);
   Circlefill(x+40,y+30,20,RED24);
@@ -264,9 +256,9 @@ STATUS_CODE DisplayTraces(int line, int start, int end, int rev, int round)
   Line_Thick(x-40,y+45,x-30,y+22,2,WHITE24);
   Line_Thick(x+32,y+22,x+48,y+38,2,WHITE24);
   Line_Thick(x+32,y+38,x+48,y+22,2,WHITE24);
-}*/
+}
 
-/*int ClickStation(int x,int y)
+int ClickStation(int x,int y)
 {
   int l = 0;
   Comfirm(x,y);
@@ -336,7 +328,7 @@ STATUS_CODE DisplayTraces(int line, int start, int end, int rev, int round)
       return 0;
     }
   }
-}*/
+}
 
 char *CalcMapName(char *path, int line)
 {
@@ -349,580 +341,520 @@ char *CalcMapName(char *path, int line)
   return path;
 }
 
-/*void ShowSta(int line)
+void ShowSta(int line)
 {
 
   puthz(301,601,"站名",48,48,BLACK24);
   puthz(300,600,"站名",48,48,BLACK24);
-  put_asc16_size(405,600,3,3,":",BLACK24);
-  Stak(line,450,600,1,0,0,0);
-}*/
-
-/*void StakInput(int func,char *name,int station,int x,int y,int Sflag)
+  Stak(line,400,600,1,0,0,0);
+}
+void StakInput(int func,char *name,int station,int x,int y,int Sflag)
 {
   if(func==3) {
     StationName(Sflag,station,name);
   } else if(func==1||func==2) {
     StakInfo(x,y,name);
   }
-}*/
-/*void StakInfo(int x,int y,char *name)
+}
+void StakInfo(int x,int y,char *name)
 {
   Bar1(x-2,y-2,x+300,y+50,DARKCYAN24);
   puthz(x+1,y+1,name,48,48,BLACK24);
   puthz(x,y,name,48,48,BLACK24);
-}*/
+}
 
-/*int Stak(int line,int x,int y,int func,int note,int Sflag,int lim)
+int Stak(int line,int x,int y,int func,int note,int Sflag,int lim)
 {
-	Sta stations[28]= {
-		{1,816,538,"刘家大湾"},
-        {2,639,490,"银河湾"},
-        {3,453,399,"龙湾一品"},
-        {4,260,365,"金广厦"},
-        {5,65,363,"万达广场"},
-        {6,140,176,"中心医院"},
-        {7,202,72,"鲇鱼墩"},
-        {8,347,18,"长湾"},
-        {9,479,17,"磁湖梦"},
-        {10,630,15,"汇金花园"},
-        {11,811,12,"武夷花园"},
-        {12,1008,87,"妇幼保健院"},
-        {13,1006,235,"明秀山庄"},
-        {14,1006,385,"琥珀山庄"},
-        {15,953,507,"湖景花园"},
-        {16,389,292,"肖铺"},
-        {17,387,82,"杭州公馆"},
-        {18,559,124,"康乐小区"},
-        {19,688,223,"白马山"},
-        {20,857,280,"二中"},
-        {21,896,390,"新区口"},
-        {22,894,477,"宏维星都"},
-        {23,29,210,"铜花山庄"},
-        {24,214,218,"庙儿咀"},
-        {25,345,219,"玉家里"},
-        {26,542,322,"怡康花园"},
-        {27,481,220,"牧羊湖"},
-        {28,286,111,"袁仓"}
-	};
-	
+  Sta stations[28]= {
+    {1,816,538,"刘家大湾"},
+    {2,639,490,"银河湾"},
+    {3,453,399,"龙湾一品"},
+    {4,260,365,"金广厦"},
+    {5,65,363,"万达广场"},
+    {6,140,176,"中心医院"},
+    {7,202,72,"鲇鱼墩"},
+    {8,347,18,"长湾"},
+    {9,479,17,"磁湖梦"},
+    {10,630,15,"汇金花园"},
+    {11,811,12,"武夷花园"},
+    {12,1008,87,"妇幼保健院"},
+    {13,1006,235,"明秀山庄"},
+    {14,1006,385,"琥珀山庄"},
+    {15,953,507,"湖景花园"},
+    {16,389,292,"肖铺"},
+    {17,387,82,"杭州公馆"},
+    {18,559,124,"康乐小区"},
+    {19,688,223,"白马山"},
+    {20,857,280,"二中"},
+    {21,896,390,"新区口"},
+    {22,894,477,"宏维星都"},
+    {23,29,210,"铜花山庄"},
+    {24,214,218,"庙儿咀"},
+    {25,345,219,"玉家里"},
+    {26,542,322,"怡康花园"},
+    {27,481,220,"牧羊湖"},
+    {28,286,111,"袁仓"}
+  };
+
   int l=0;
   int choose=0;
-  int temp_note;
+  int temp_note=note;
   int cur_station = 0;
   int k=0;
   char Dflag[5];
-  temp_note=note;
   Mouse_Init();
   while(1) {
-	MouseShow(&mouse);
-	if (MouseIn(806, 528, 826, 548) == 1 && (line==1||line==3||line==4||line==5||func!=3) ) {
-	  l=1;
-	  if(MousePress(806, 528, 826, 548) && func==3) {
-		MouseOff(&mouse);
-		return l;
-	  }
-      if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-	  	MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
-		//MouseOff(&mouse);
-        StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
-      
-    } else if (MouseIn(629, 480, 649, 500) == 1 && (line==1||func!=3) ) {
-      l=2;
-      if(MousePress(629, 480, 649, 500) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
-      if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse); 
-        StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
-      
-      
-    } else if (MouseIn(443, 389, 463, 409) == 1 && (line==1||line==4||line==5||func!=3) ) {
-      l=3;
-      if(MousePress(443, 389, 463, 409) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
-      if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
-        StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
-      
-    } else if (MouseIn(250, 355, 270, 375) == 1 && (line==1||line==4||func!=3) ) {
-      l=4;
-      if(MousePress(250, 355, 270, 375) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
-      if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
-        StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
-
-    } else if (MouseIn(55, 353, 75, 373) == 1 && (line==1||line==4||line==5||func!=3) ) {
-      l=5;
-      if(MousePress(55, 353, 75, 373) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
-      if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
-        StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
-
-    } else if ( MouseIn(130, 166, 150, 186) == 1 && (line==1||func!=3) ) {
-      l=6;
-      if(MousePress(130, 166, 150, 186) && func==3) {
-      	return l;
-	  }
-      if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
-        StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
-	  
-    } else if (MouseIn(192, 62, 212, 82) == 1 && (line==1||func!=3) ) {
-      l=7;
-      if(MousePress(192, 62, 212, 82) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
-      if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
-        StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
-
-    } else if (MouseIn(337, 8, 357, 28) == 1 && (line==1||line==3||func!=3) ) {
-      l=8;
-      if(MousePress(337, 8, 357, 28) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
-      if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
-        StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
-
-    } else if (MouseIn(469, 7, 489, 27) == 1 && (line==1||line==3||line==4||func!=3) ) {
-      l=9;
-       if(MousePress(469, 7, 489, 27) && func==3) {
-       	MouseOff(&mouse);
-      	return l;
-	  }
-      if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
-        StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
-
-    } else if (MouseIn(620, 5, 640, 25) == 1 && (line==1||line==4||func!=3) ) {
-      l=10;
-      if(MousePress(620, 5, 640, 25) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
-      if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
-        StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
-
-    } else if (MouseIn(801, 2, 821, 22) == 1 && (line==1||line==4||func!=3) ) {
-      l=11;
-      if(MousePress(801, 2, 821, 22) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
-      if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
-        StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
-
-    } else if (MouseIn(998, 77, 1018, 97) == 1 && (line==1||line==4||func!=3) ) {
-      l=12;
-      if(MousePress(998, 77, 1018, 97) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
-      if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
-        StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
-      
-    } else if (MouseIn(996, 225, 1016, 245) == 1 && (line==1||line==4||func!=3) ) {
-      l=13;
-       if(MousePress(996, 225, 1016, 245) && func==3) {
-       	MouseOff(&mouse);
-      	return l;
+    MouseShow(&mouse);
+    if (MouseIn(806, 528, 826, 548) == 1 && (line==1||line==3||line==4||line==5) ) {
+      l=1;
+      if(MousePress(806, 528, 826, 548) && func==3) {
+        MouseOff(&mouse);
+        return l;
       }
       if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
+        MouseOff(&mouse);
         StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
-      
-    } else if (MouseIn(996, 375, 1016, 395) == 1 && (line==1||line==4||func!=3) ) {
+      }
+
+    } else if (MouseIn(629, 480, 649, 500) == 1 && (line==1) ) {
+      l=2;
+      if(MousePress(629, 480, 649, 500) && func==3) {
+        MouseOff(&mouse);
+        return l;
+      }
+      if(cur_station == l) {
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
+        MouseOff(&mouse);
+        StakInput(func,stations[l-1].name,l,x,y,Sflag);
+      }
+
+
+    } else if (MouseIn(443, 389, 463, 409) == 1 && (line==1||line==4||line==5) ) {
+      l=3;
+      if(MousePress(443, 389, 463, 409) && func==3) {
+        MouseOff(&mouse);
+        return l;
+      }
+      if(cur_station == l) {
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
+        MouseOff(&mouse);
+        StakInput(func,stations[l-1].name,l,x,y,Sflag);
+      }
+
+    } else if (MouseIn(250, 355, 270, 375) == 1 && (line==1||line==4) ) {
+      l=4;
+      if(MousePress(250, 355, 270, 375) && func==3) {
+        MouseOff(&mouse);
+        return l;
+      }
+      if(cur_station == l) {
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
+        StakInput(func,stations[l-1].name,l,x,y,Sflag);
+      }
+
+    } else if (MouseIn(55, 353, 75, 373) == 1 && (line==1||line==4||line==5) ) {
+      l=5;
+      if(MousePress(55, 353, 75, 373) && func==3) {
+        MouseOff(&mouse);
+        return l;
+      }
+      if(cur_station == l) {
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
+        StakInput(func,stations[l-1].name,l,x,y,Sflag);
+      }
+
+    } else if ( MouseIn(130, 166, 150, 186) == 1 && (line==1) ) {
+      l=6;
+      if(MousePress(130, 166, 150, 186) && func==3) {
+        return l;
+      }
+      if(cur_station == l) {
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
+        StakInput(func,stations[l-1].name,l,x,y,Sflag);
+      }
+
+    } else if (MouseIn(192, 62, 212, 82) == 1 && (line==1) ) {
+      l=7;
+      if(MousePress(192, 62, 212, 82) && func==3) {
+        MouseOff(&mouse);
+        return l;
+      }
+      if(cur_station == l) {
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
+        StakInput(func,stations[l-1].name,l,x,y,Sflag);
+      }
+
+    } else if (MouseIn(337, 8, 357, 28) == 1 && (line==1||line==3) ) {
+      l=8;
+      if(MousePress(337, 8, 357, 28) && func==3) {
+        MouseOff(&mouse);
+        return l;
+      }
+      if(cur_station == l) {
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
+        StakInput(func,stations[l-1].name,l,x,y,Sflag);
+      }
+
+    } else if (MouseIn(469, 7, 489, 27) == 1 && (line==1||line==3||line==4) ) {
+      l=9;
+      if(MousePress(469, 7, 489, 27) && func==3) {
+        MouseOff(&mouse);
+        return l;
+      }
+      if(cur_station == l) {
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
+        StakInput(func,stations[l-1].name,l,x,y,Sflag);
+      }
+
+    } else if (MouseIn(620, 5, 640, 25) == 1 && (line==1||line==4) ) {
+      l=10;
+      if(MousePress(620, 5, 640, 25) && func==3) {
+        MouseOff(&mouse);
+        return l;
+      }
+      if(cur_station == l) {
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
+        StakInput(func,stations[l-1].name,l,x,y,Sflag);
+      }
+
+    } else if (MouseIn(801, 2, 821, 22) == 1 && (line==1||line==4) ) {
+      l=11;
+      if(MousePress(801, 2, 821, 22) && func==3) {
+        MouseOff(&mouse);
+        return l;
+      }
+      if(cur_station == l) {
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
+        StakInput(func,stations[l-1].name,l,x,y,Sflag);
+      }
+
+    } else if (MouseIn(998, 77, 1018, 97) == 1 && (line==1||line==4) ) {
+      l=12;
+      if(MousePress(998, 77, 1018, 97) && func==3) {
+        MouseOff(&mouse);
+        return l;
+      }
+      if(cur_station == l) {
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
+        StakInput(func,stations[l-1].name,l,x,y,Sflag);
+      }
+
+    } else if (MouseIn(996, 225, 1016, 245) == 1 && (line==1||line==4) ) {
+      l=13;
+      if(MousePress(996, 225, 1016, 245) && func==3) {
+        MouseOff(&mouse);
+        return l;
+      }
+      if(cur_station == l) {
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
+        StakInput(func,stations[l-1].name,l,x,y,Sflag);
+      }
+
+    } else if (MouseIn(996, 375, 1016, 395) == 1 && (line==1||line==4) ) {
       l=14;
       if(MousePress(996, 375, 1016, 395) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
+        MouseOff(&mouse);
+        return l;
+      }
       if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
         StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
+      }
 
-    } else if (MouseIn(943, 497, 963, 517) == 1 && (line==1||line==4||func!=3) ) {
+    } else if (MouseIn(943, 497, 963, 517) == 1 && (line==1||line==4) ) {
       l=15;
       if(MousePress(943, 497, 963, 517) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
+        MouseOff(&mouse);
+        return l;
+      }
       if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
         StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
+      }
 
-    } else if (MouseIn(379, 282, 399, 302) == 1 && (line==5||func!=3) ) {
+    } else if (MouseIn(379, 282, 399, 302) == 1 && (line==5) ) {
       l=16;
       if(MousePress(379, 282, 399, 302) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
+        MouseOff(&mouse);
+        return l;
+      }
       if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
         StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
+      }
 
-    } else if (MouseIn(377, 72, 397, 92) == 1 && (line==4||func!=3) ) {
+    } else if (MouseIn(377, 72, 397, 92) == 1 && (line==4) ) {
       l=17;
       if(MousePress(377, 72, 397, 92) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
+        MouseOff(&mouse);
+        return l;
+      }
       if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
         StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
+      }
 
-    } else if (MouseIn(549, 114, 569, 134) == 1 && (line==3||func!=3) ) {
+    } else if (MouseIn(549, 114, 569, 134) == 1 && (line==3) ) {
       l=18;
       if(MousePress(549, 114, 569, 134) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
+        MouseOff(&mouse);
+        return l;
+      }
       if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
         StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
+      }
 
-    } else if (MouseIn(678, 213, 698, 233) == 1 && (line==3||line==5||func!=3) ) {
+    } else if (MouseIn(678, 213, 698, 233) == 1 && (line==3||line==5) ) {
       l=19;
       if(MousePress(678, 213, 698, 233) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
+        MouseOff(&mouse);
+        return l;
+      }
       if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
         StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
+      }
 
-    } else if (MouseIn(847, 270, 867, 290) == 1 && (line==3||line==5||func!=3) ) {
+    } else if (MouseIn(847, 270, 867, 290) == 1 && (line==3||line==5) ) {
       l=20;
       if(MousePress(847, 270, 867, 290) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
+        MouseOff(&mouse);
+        return l;
+      }
       if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
         StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
+      }
 
-    } else if (MouseIn(886, 380, 906, 400) == 1 && (line==3||line==5||func!=3) ) {
+    } else if (MouseIn(886, 380, 906, 400) == 1 && (line==3||line==5) ) {
       l=21;
       if(MousePress(886, 380, 906, 400) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
+        MouseOff(&mouse);
+        return l;
+      }
       if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
         StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
+      }
 
-    } else if (MouseIn(884, 467, 904, 487) == 1 && (line==3||line==5||func!=3) ) {
+    } else if (MouseIn(884, 467, 904, 487) == 1 && (line==3||line==5) ) {
       l=22;
       if(MousePress(884, 467, 904, 487) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
+        MouseOff(&mouse);
+        return l;
+      }
       if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
         StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
+      }
 
-    } else if (MouseIn(19, 200, 39, 220) == 1 && (line==3||line==4||line==5||func!=3) ) {
+    } else if (MouseIn(19, 200, 39, 220) == 1 && (line==3||line==4||line==5) ) {
       l=23;
       if(MousePress(19, 200, 39, 220) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
+        MouseOff(&mouse);
+        return l;
+      }
       if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
         StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
+      }
 
-    } else if (MouseIn(204, 208, 224, 228) == 1 && (line==3||line==5||func!=3) ) {
+    } else if (MouseIn(204, 208, 224, 228) == 1 && (line==3||line==5) ) {
       l=24;
       if(MousePress(204, 208, 224, 228) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
+        MouseOff(&mouse);
+        return l;
+      }
       if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
         StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
+      }
 
-    } else if (MouseIn(335, 209, 355, 229) == 1 && (line==5||func!=3) ) {
+    } else if (MouseIn(335, 209, 355, 229) == 1 && (line==5) ) {
       l=25;
       if(MousePress(335, 209, 355, 229) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
+        MouseOff(&mouse);
+        return l;
+      }
       if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
         StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
+      }
 
-    } else if (MouseIn(532, 312, 552, 332) == 1 && (line==4||line==5||func!=3) ) {
+    } else if (MouseIn(532, 312, 552, 332) == 1 && (line==4||line==5) ) {
       l=26;
       if(MousePress(532, 312, 552, 332) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
+        MouseOff(&mouse);
+        return l;
+      }
       if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
         StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
-      
-    } else if (MouseIn(471, 210, 491, 230) == 1 && (line==4||func!=3) ) {
+      }
+
+    } else if (MouseIn(471, 210, 491, 230) == 1 && (line==4) ) {
       l=27;
       if(MousePress(471, 210, 491, 230) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
+        MouseOff(&mouse);
+        return l;
+      }
       if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
         StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
-      
-    } else if (MouseIn(276, 101, 296, 121) == 1 && (line==3||func!=3) ) {
+      }
+
+    } else if (MouseIn(276, 101, 296, 121) == 1 && (line==3) ) {
       l=28;
       if(MousePress(276, 101, 296, 121) && func==3) {
-      	MouseOff(&mouse);
-      	return l;
-	  }
+        MouseOff(&mouse);
+        return l;
+      }
       if(cur_station == l) {
-      	continue;
-	  } else if(cur_station!=l) {
-	  	cur_station = l;
-		MouseOff(&mouse); 
-		Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
-		MouseOn(mouse);
+        continue;
+      } else if(cur_station!=l) {
+        cur_station = l;
+        Circlefill(stations[l-1].x,stations[l-1].y,9,GREEN24);
         StakInput(func,stations[l-1].name,l,x,y,Sflag);
-	  } 
-      
+      }
+
     } else if(MousePress(906,710,1022,766)&&choose==0) {
       MouseOff(&mouse);
       if(temp_note!=3) {
-      	return temp_note;
-	  } else break;
-      
+        return temp_note;
+      } else break;
+
     } else if(MousePress(412,670,612,720)&&func==2&&choose==0&&lim==1) {
-	    RecordBox(1);
-	    choose=1;
-		  
-	} else if(MousePress(639,589,689,639)&&func==2&&choose==1&&lim==1) {
-	    MouseOff(&mouse);
-	    YNbut(2);
-	    temp_note=1;
-	    YNbut(4);
-	    MouseOn(mouse);
-		  
-	} else if(MousePress(692,589,742,639)&&func==2&&choose==1&&lim==1) {
-		MouseOff(&mouse);
-		YNbut(3);
-		temp_note=0;
-		YNbut(4);
-		MouseOn(mouse);		  
-		
-	} else if(MousePress(739,649,789,699)&&func==2&&choose==1&&lim==1) {
-		MouseOff(&mouse);
-        YNbut(5);
-        temp_note=2;
-        YNbut(1);
-        MouseOn(mouse);
-        
+      RecordBox(1);
+      choose=1;
+
+    } else if(MousePress(639,589,689,639)&&func==2&&choose==1&&lim==1) {
+      MouseOff(&mouse);
+      YNbut(2);
+      temp_note=1;
+      YNbut(4);
+      MouseOn(mouse);
+
+    } else if(MousePress(692,589,742,639)&&func==2&&choose==1&&lim==1) {
+      MouseOff(&mouse);
+      YNbut(3);
+      temp_note=0;
+      YNbut(4);
+      MouseOn(mouse);
+    } else if(MousePress(739,649,789,699)&&func==2&&choose==1&&lim==1) {
+      MouseOff(&mouse);
+      YNbut(5);
+      temp_note=2;
+      YNbut(1);
+      MouseOn(mouse);
     } else if(MousePress(784,710,900,766)&&func==2&&choose==1&&lim==1) {
-    	MouseOff(&mouse);
-    	note=temp_note;
-    	Bar1(0,560,1024,768,DARKCYAN24); 	
-        Bar1(414,672,614,722,BLACK24);
-	    Bar1(412,670,612,720,LIGHTGRAY24);
-	    puthz(416,671,"发热上报",48,48,BLACK24);
-        returnbut();
-        choose=0;
-        MouseOn(mouse);
-        
-	} else if(MousePress(906,710,1022,766)&&func==2&&choose==1&&lim==1) {
-		MouseOff(&mouse);
-		note=temp_note;
-		Bar1(0,560,1024,768,DARKCYAN24); 	
-        Bar1(414,672,614,722,BLACK24);
-	    Bar1(412,670,612,720,LIGHTGRAY24);
-	    puthz(416,671,"发热上报",48,48,BLACK24);
-        returnbut();
-        choose=0;
-        MouseOn(mouse);
-	} else if(choose==0&&MouseIn(stations[l-1].x-10,stations[l-1].y-10,stations[l-1].x+10,stations[l-1].y+10)==0) {
-	    Circlefill(stations[l-1].x,stations[l-1].y,9,LIGHTRED24);
-		cur_station = 0;		
-	}
+      MouseOff(&mouse);
+      note=temp_note;
+      Bar1(0,560,1024,768,DARKCYAN24);
+      Bar1(414,672,614,722,BLACK24);
+      Bar1(412,670,612,720,LIGHTGRAY24);
+      puthz(416,671,"发热上报",48,48,BLACK24);
+      returnbut();
+      choose=0;
+      MouseOn(mouse);
+    } else if(MousePress(906,710,1022,766)&&func==2&&choose==1&&lim==1) {
+      MouseOff(&mouse);
+      note=temp_note;
+      Bar1(0,560,1024,768,DARKCYAN24);
+      Bar1(414,672,614,722,BLACK24);
+      Bar1(412,670,612,720,LIGHTGRAY24);
+      puthz(416,671,"发热上报",48,48,BLACK24);
+      returnbut();
+      choose=0;
+      MouseOn(mouse);
+    } else if(choose==0&&MouseIn(stations[l-1].x-10,stations[l-1].y-10,stations[l-1].x+10,stations[l-1].y+10)==0) {
+      Circlefill(stations[l-1].x,stations[l-1].y,9,LIGHTRED24);
+      cur_station = 0;
+    }
   }
-}*/
+}
 STATUS_CODE DisplayLine(int line)
 {
   char path[32];
@@ -933,7 +865,7 @@ STATUS_CODE DisplayLine(int line)
   return SUCCESS_CODE;
 }
 
-/*STATUS_CODE DrawMainPage()
+STATUS_CODE DrawMainPage()
 {
   int i;
   Bar1(0,0,1024,768,DARKCYAN24);
@@ -947,18 +879,21 @@ STATUS_CODE DisplayLine(int line)
   puthz(370,211+130,"添加行程记录",48,50,BLACK24);
   puthz(371,212+260,"查看历史记录",48,50,BLACK24);
   puthz(370,211+260,"查看历史记录",48,50,BLACK24);
+  Bar1(904,708,1024,768,DARKGRAY24);
+  Bar1(906,710,1022,766,LIGHTGRAY24);
+  puthz(918,716,"返回",48,48,BLACK24);
   returnbut();
   return SUCCESS_CODE;
-}*/
+}
 
-/*void readmessage(Route *temp_route,int rpage,int i)
+void readmessage(Route *temp_route,int rpage,int i)
 {
   StaName(temp_route->ps[(rpage-1)*4+i].start,258,199+(i*120));
   StaName(temp_route->ps[(rpage-1)*4+i].end,570,199+(i*120));
   ShowTime(temp_route->ps[(rpage-1)*4+i].name,250,149+i*120);
   ShowTime(temp_route->ps[(rpage-1)*4+i].time,561,149+i*120);
-}*/
-/*void rRead(Route *route,UserInfo *user,int rpage)
+}
+void rRead(Route *route,UserInfo *user,int rpage)
 {
   int i;
   int k;
@@ -991,9 +926,9 @@ STATUS_CODE DisplayLine(int line)
       readmessage(temp_route,rpage,i);
     }
   }
-}*/
+}
 
-/*void Relevant(Route *route,int rpage,UserInfo *user)
+void Relevant(Route *route,int rpage,UserInfo *user)
 {
   prt_hz16_size(193,32,4,4,"同车乘客行程记录查询",DARKGRAY24,"HZK\\hzk16");
   prt_hz16_size(191,30,4,4,"同车乘客行程记录查询",BLACK24,"HZK\\hzk16");
@@ -1007,10 +942,11 @@ STATUS_CODE DisplayLine(int line)
   Bar1(132,502,892,608,NAVY24);
 
   rRead(route,user,rpage);
-}*/
+}
 
 
-/*void Hisbox(int page, UserInfo *user)
+
+void Hisbox(int page, UserInfo *user)
 {
   int i;
   prt_hz16_size(257,32,4,4,"用户历史行程记录",DARKGRAY24,"HZK\\hzk16");
@@ -1019,6 +955,10 @@ STATUS_CODE DisplayLine(int line)
   Bar1(130,260,894,370,LIGHTGRAY24);
   Bar1(130,380,894,490,LIGHTGRAY24);
   Bar1(130,500,894,610,LIGHTGRAY24);
+  /* bar(100,250,540,290);
+   bar(100,300,540,340);
+   bar(100,350,540,390);
+   bar(100,400,540,440);*/
   Bar1(132,142,892,248,NAVY24);
   Bar1(132,262,892,368,NAVY24);
   Bar1(132,382,892,488,NAVY24);
@@ -1042,8 +982,8 @@ STATUS_CODE DisplayLine(int line)
     }
 
   }
-}*/
-/*void InfoN(int c,int i)
+}
+void InfoN(int c,int i)
 {
   if(c==1) {
     puthz(139,149+(i*120),"时间",32,32,DARKGRAY24);
@@ -1074,9 +1014,8 @@ STATUS_CODE DisplayLine(int line)
     puthz(760,155+i*120,"显示路径",24,24,DARKGRAY24);
     puthz(759,154+i*120,"显示路径",24,24,BLACK24);
   }
-}*/
-
-/*void InfoName(int c,int i)
+}
+void InfoName(int c,int i)
 {
   if(c==0) {
     InfoN(1,i);
@@ -1106,9 +1045,9 @@ void returnbut()
   Bar1(906,710,1022,766,LIGHTGRAY24);
   puthz(918,716,"返回",48,48,BLACK24);
   puthz(917,715,"返回",48,48,BLACK24);
-}*/
+}
 
-/*void RecordTrace(UserInfo *user,int page,int line,int c)
+void RecordTrace(UserInfo *user,int page,int line,int c)
 {
   int cur = (page-1)*4+line-1;
   if(c==1) {
@@ -1126,16 +1065,16 @@ void returnbut()
     returnbut();
     Stak(user->history_lines[cur].line_no,500,600,1,0,0,0);
   }
-}*/
-/*void RPTrace(Route *route,int page,int line)
+}
+void RPTrace(Route *route,int page,int line)
 {
   Bar1(0,0,1024,768,DARKCYAN24);
   DisplayLine(route->line);
   DisplayTraces(route->line,route->ps[(page-1)*4+line-1].start,route->ps[(page-1)*4+line-1].end, CheckRev(route->route_name), CheckRound(route->route_name));
   returnbut();
   Stak(route->line,500,600,1,0,0,0);
-}*/
-/*void RecordBox(int i)
+}
+void RecordBox(int i)
 {
   if(i==0) {
     Bar1(0,560,1024,768,DARKCYAN24);
@@ -1146,13 +1085,13 @@ void returnbut()
     returnbut();
     AddBox3();
   }
-}*/ 
-/*void RecordFunc(UserInfo *user,int page,int line)
+}
+void RecordFunc(UserInfo *user,int page,int line)
 {
   RecordTrace(user,page,line,1);
   user->history_lines[(page-1)*4+line-1].note = Stak(user->history_lines[(page-1)*4+line-1].line_no,410,600,2,0,0,1);
-}*/ 
-/*void HisBoxFunc(UserInfo *user)
+}
+void HisBoxFunc(UserInfo *user)
 {
   int page = 1;
   int line=0;
@@ -1285,9 +1224,9 @@ void returnbut()
       MouseOn(mouse);//查看当页第四条记录对应乘客乘车记录
     }
   }
-}*/ 
+}
 
-/*void RelevantF(int page,int line, UserInfo *user) /////////////////////////////////////////////////
+void RelevantF(int page,int line, UserInfo *user) /////////////////////////////////////////////////
 {
   int rpage=1;
   int rline=0;
@@ -1384,12 +1323,15 @@ void returnbut()
       MouseOn(mouse);
     }
   }
-}*/ 
+}
 
-/*void RSelectMaps()
+void RSelectMaps()
 {
   int i;
   Bar1(0,0,1024,768,DARKCYAN24);
+  Bar1(904,708,1024,768,DARKGRAY24);
+  Bar1(906,710,1022,766,LIGHTGRAY24);
+  puthz(918,716,"返回",48,48,BLACK24);
   returnbut();
   for(i=0; i<4; i++) {
     Bar1(218,96+i*170,806,174+i*170,DARKGRAY24);
@@ -1402,6 +1344,14 @@ void returnbut()
   put_asc16_size(520,115,3,3,"(   )",BLACK24);
   puthz(543,126,"外环线",24,24,BLACK24);
   puthz(542,125,"外环线",24,24,BLACK24);
+
+  /*	puthz(223,113+130,"线路二",48,48,BLACK24);
+  	puthz(222,112+130,"线路二",48,48,BLACK24);
+  	puthz(431,126+130,"刘家大湾",24,24,BLACK24);
+  	puthz(430,125+130,"刘家大湾",24,24,BLACK24);
+  	put_asc16_size(520,115+130,3,3,"(   )",BLACK24);
+  	puthz(543,126+130,"内环线",24,24,BLACK24);
+  	puthz(542,125+130,"内环线",24,24,BLACK24);*/
 
   puthz(223,113+170,"二路",48,48,BLACK24);
   puthz(222,112+170,"二路",48,48,BLACK24);
@@ -1435,14 +1385,14 @@ void returnbut()
   put_asc16_size(695,115+170*3,3,3,"( )",BLACK24);
   puthz(719,126+170*3,"内",24,24,BLACK24);
   puthz(718,125+170*3,"内",24,24,BLACK24);
-  Bar1(375,708,649,768,DARKGRAY24);
-  Bar1(377,710,647,766,LIGHTGRAY24);
-  puthz(385,723,"点击录入正向路线",32,32,BLACK24);
-  puthz(384,722,"点击录入正向路线",32,32,BLACK24);
-}*/
+  Bar1(435,708,589,768,DARKGRAY24);
+  Bar1(437,710,587,766,LIGHTGRAY24);
+  puthz(441,716,"上一页",48,48,BLACK24);
+  puthz(440,715,"上一页",48,48,BLACK24);
+}
 
 
-/*void AddBox1()
+void AddBox1()
 {
   Bar1(0,560,1024,705,LIGHTGRAY24);
   Bar1(782,708,902,768,LIGHTGRAY24);
@@ -1458,10 +1408,10 @@ void returnbut()
   Bar1(906,710,1022,766,LIGHTGRAY24);
   puthz(918,716,"返回",48,48,BLACK24);
   returnbut();
-}*/
+}
 
 
-/*void StationName(int Sflag,int Station,char *name)
+void StationName(int Sflag,int Station,char *name)
 {
   if(Sflag==1) { //起点站
     Bar1(208,598,462,662,BLACK24);
@@ -1472,9 +1422,9 @@ void returnbut()
     Bar1(566,602,812,658,LIGHTGRAY24);
     puthz(571,606,name,48,48,BLACK24);
   }
-}*/ 
+}
 
-/*void AddBox2()
+void AddBox2()
 {
   Bar1(0,560,1024,705,LIGHTGRAY24);
   Bar1(782,708,902,768,LIGHTGRAY24);
@@ -1522,9 +1472,8 @@ void YNbut(int cho)
     Bar1(739,649,789,699,DARKGRAY24);
     puthz(740,650,"是",48,48,RED24);
   }
-}*/
-
-/*void AddBox3()
+}
+void AddBox3()
 {
   Bar1(0,560,1024,705,LIGHTGRAY24);
   puthz(100,590,"近十四天是否有发热症状",48,48,BLACK24);
@@ -1535,8 +1484,8 @@ void YNbut(int cho)
   Bar1(784,710,900,766,LIGHTGRAY24);
   puthz(795,716,"确认",48,48,BLACK24);
   puthz(794,715,"确认",48,48,BLACK24);
-}*/
-/*STATUS_CODE JudgeTime(char *year,char *month,char *day,int yi,int mi,int di)
+}
+STATUS_CODE JudgeTime(char *year,char *month,char *day,int yi,int mi,int di)
 {
   int i;
   int yk,mk,dk;
@@ -1557,8 +1506,8 @@ void YNbut(int cho)
   } else {
     return ERROR_CODE;
   }
-}*/ 
-/*void Connect(char *year,char *month,char *day,char *time,char *route_name,char *bnum,int c,char *btime,int page,int line)
+}
+void Connect(char *year,char *month,char *day,char *time,char *route_name,char *bnum,int c,char *btime,int page,int line)
 {
   int mi;
   int di;
@@ -1628,8 +1577,8 @@ void YNbut(int cho)
     strcpy(route_name,btime);
     strcat(route_name,bnum);
   }
-}*/ 
-/*void AddHis(char *account, int line, UserInfo *user,int page)   //page==1正向page==2反向
+}
+void AddHis(char *account, int line, UserInfo *user,int page)   //page==1正向page==2反向
 {
   int LEN1;
   int start=0;
@@ -1714,7 +1663,6 @@ void YNbut(int cho)
       }
     } else if(MousePress(212,602,458,658) && Dflag==1 && start==0) {
       MouseOff(&mouse);
-      Bar1(212,602,458,658,LIGHTGRAY24);
       start=Stak(line,335,658,3,0,1,0);
       //Bar1(212,663,458,713,LIGHTGRAY24);
 
@@ -1724,18 +1672,11 @@ void YNbut(int cho)
       MouseOn(mouse);
     } else if(MousePress(566,602,812,658) && Dflag==1 && end==0) {
       MouseOff(&mouse);
-      Bar1(566,602,812,658,LIGHTGRAY24);
       end=Stak(line,689,658,3,0,2,0);
       //Bar1(566,663,812,713,LIGHTGRAY24);
 
       if(start!=0&&end!=0) {
-         if(DisplayTraces(line,start,end, page==2, line==1)==ERROR_CODE) {
-			InputError(line,start,end,0,0,0);
-         	Maps();
-         	NextPage();
-         	Dflag=1;
-            break;
-		 }
+        DisplayTraces(line,start,end, page==2, line==1);
       }
       MouseOn(mouse);
     } else if(MousePress(906,710,1022,766)) {
@@ -1797,8 +1738,8 @@ void YNbut(int cho)
       break;
     }
   }
-}*/
-/*void InputError(int line,int start,int end, int rev, int round, int k)
+}
+void InputError(int line,int start,int end, int rev, int round, int k)
 {
   Bar1(362,400,662,550,LIGHTGRAY24);
   bar3(362,400,662,550,BLACK24);
@@ -1822,9 +1763,8 @@ void YNbut(int cho)
       break;
     }
   }
-}*/
-
-/*void AddFunc(UserInfo *user)
+}
+void AddFunc(UserInfo *user)
 {
   int page=1;
   int line=0;//page=1正向 page=2反向
@@ -1841,6 +1781,13 @@ void YNbut(int cho)
       page=1;
       MouseOn(mouse);
     }
+    /*	else if(MousePress(218,226,806,304))
+    		{
+    			MouseOff(&mouse);
+    			DisplayLine(2);
+    			AddHis(2, user);
+    			MouseOn(mouse);
+    		}*/
     else if(MousePress(218,96+170,806,174+170)) {
       MouseOff(&mouse);
       line=3;
@@ -1862,7 +1809,7 @@ void YNbut(int cho)
       AddHis(user->account, line, user, page);
       page=1;
       MouseOn(mouse);
-    } else if(MousePress(377,710,647,766)) {
+    } else if(MousePress(437,710,587,766)) {
       MouseOff(&mouse);
       if(page==2) {
         Maps();
@@ -1879,9 +1826,9 @@ void YNbut(int cho)
       break;
     }
   }
-}*/
+}
 
-/*STATUS_CODE SelectMap()
+STATUS_CODE SelectMap()
 {
   Maps();
   Mouse_Init();
@@ -1896,6 +1843,13 @@ void YNbut(int cho)
       Maps();
       MouseOn(mouse);
     }
+    /*	else if(MousePress(218,226,806,304)&&Page==0)
+    		{
+    			MouseOff(&mouse);
+    			DisplayLine(2);
+    			MouseOn(mouse);
+    			Page=1;
+    		}*/
     else if(MousePress(218,96+170,806,174+170)) {
       MouseOff(&mouse);
       Bar1(0,0,1024,768,DARKCYAN24);
@@ -1927,7 +1881,7 @@ void YNbut(int cho)
       MouseOn(mouse);
     }
   }
-}*/
+}
 STATUS_CODE RunFunc(char *user_account)
 {
   STATUS_CODE flag;

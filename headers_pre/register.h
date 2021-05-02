@@ -25,9 +25,12 @@ function RegisterFunc:
     返回值：成功返回SUCCESS_CODE,失败返回ERROR_CODE
 */
 STATUS_CODE RegisterFunc(char *user_account);
-
+void JWrong(int x,int y);
+void JRight(int x,int y);
 void RSign_in(void);
 void Nopermis(void);
+void Adsign(void);
+void DrawBus(void);;
 
 
 #endif
