@@ -28,6 +28,6 @@ STATUS_CODE RegisterFunc(char *user_account);
 
 void RSign_in(void);
 void Nopermis(void);
-
+void RegFunc(void);
 
 #endif

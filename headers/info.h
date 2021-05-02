@@ -57,13 +57,12 @@ typedef struct HistoryLinesInfomation {
   history_lines: 用户历史乘车信息
 }
 */
-typedef struct UserInfomation { 
+typedef struct UserInfomation {
   int nhistory;
   char name[16];
   char account[16];
   HisLi history_lines[16];
 } UserInfo;
-
 
 /*
 struct BusPassenger{ //用户在车次中的信息条目
@@ -74,11 +73,11 @@ struct BusPassenger{ //用户在车次中的信息条目
   time: 乘车时间
 }
 */
-typedef struct BusPassenger{
+typedef struct BusPassenger {
   int start, end, note;
   char name[16];
   char time[16];
-}Passenger;
+} Passenger;
 
 /*
 struct BusRoute{ //某车次内乘客信息
@@ -88,10 +87,10 @@ struct BusRoute{ //某车次内乘客信息
   ps: 用户信息条目数组
 }
 */
-typedef struct BusRoute{
+typedef struct BusRoute {
   int line, npassenger;
   char route_name[16];
   Passenger ps[16];
-}Route;
+} Route;
 
 #endif

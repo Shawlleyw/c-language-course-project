@@ -15,7 +15,7 @@
 #define LIGHTRED24 0xf800
 #define MAGENTA24 0xf81f
 #define YELLOW24 0xffe0
-#define WHITE24 0xffff 
+#define WHITE24 0xffff
 
 /*
 STATUS_CODE{
@@ -24,13 +24,10 @@ STATUS_CODE{
   ERROR_CODE = -1: 错误信号
 }
 */
-typedef enum
-{
+typedef enum {
   EXIT_CODE = 0,
   SUCCESS_CODE = 1,
   ERROR_CODE = -1,
 } STATUS_CODE;
-
-
 
 #endif // TRAFFIC_HEADERS_STATUS_H_

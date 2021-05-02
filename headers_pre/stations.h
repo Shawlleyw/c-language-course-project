@@ -1,6 +1,0 @@
-#ifndef TRAFFIC_HEADERS_STATIONS_H_
-#define TRAFFIC_HEADERS_STATIONS_H_
-
-int ClickStation();
-
-#endif // TRAFFIC_HEADERS_STATIONS_

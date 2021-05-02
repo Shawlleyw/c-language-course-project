@@ -1,6 +1,7 @@
 #ifndef TRAFFIC_HEADERS_RUN_H_
 #define TRAFFIC_HEADERS_RUN_H_
 #include "headers/status.h"
+#include "headers/info.h"
 /*
 function RunFunc:
     传入参数: 无
@@ -8,14 +9,6 @@ function RunFunc:
     返回值：成功返回SUCCESS_CODE,失败返回ERROR_CODE
 */
 STATUS_CODE RunFunc(char *user_account);
-
-/*
-function GetUserInfo:
-    传入参数：(用户信息结构地址, 用户账号)
-    功能：从用户文件中取得用户信息并存入*user结构体中
-    返回值：成功返回SUCCESS_CODE,失败返回ERROR_CODE
-*/
-STATUS_CODE GetUserInfo(UserInfo *user, char *user_account);
 
 /*
 function PrintUseName:
@@ -37,17 +30,16 @@ STATUS_CODE DisplayLine(int line);
 STATUS_CODE SelectMap();
 /*
 function AddFunc:
-   
-*/ 
+
+*/
 
 int CheckRound(char *name);
 
 int CheckRev(char *name);
 
+char *CalcRoutePath(char *path, int line);
 
-char* CalcRoutePath(char *path, int line);
-
-char* CalcStationPath(char *path, int station);
+char *CalcStationPath(char *path, int station);
 
 void ReadLineInfo(Lines *l, int line);
 

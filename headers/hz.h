@@ -1,89 +1,82 @@
 #ifndef __HZ_H__
 #define __HZ_H__
-#include<stdio.h>
+#include <stdio.h>
 
+#include <dos.h>
+#include <fcntl.h>
+#include <io.h>
 
-#include<dos.h>
-#include<fcntl.h>
-#include<io.h>
+#include <bios.h>
+#include <stdlib.h>
+#include <string.h>
 
-
-
-
-#include<string.h>
-#include<stdlib.h>
-#include<bios.h>
-
-#include<conio.h>
-#include "svga.h"
 #include "mouse.h"
+#include "svga.h"
+#include <conio.h>
 
-#define ENTER   0x1c0d
+#define ENTER 0x1c0d
 
-/***ÓÃ»§ÐÅÏ¢½á¹¹Ìå***/
-typedef struct person
-{
-	char user[10];
-	char password[10];
-	struct person *next;
-}person;
+/***ï¿½Ã»ï¿½ï¿½ï¿½Ï¢ï¿½á¹¹ï¿½ï¿½***/
+typedef struct person {
+  char user[10];
+  char password[10];
+  struct person *next;
+} person;
 
+void puthz(int x, int y, char *s, int flag, int part, int color);
 
+/*ï¿½ï¿½ï¿½ï¿½16ï¿½ï¿½ï¿½Ö¿ï¿½ï¿½ï¿½ï¿½16*16ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+void prt_hz16(int x, int y, char *s, unsigned int color, char *name);
 
+/*ï¿½ï¿½ï¿½ï¿½24ï¿½ï¿½ï¿½Ö¿ï¿½ï¿½ï¿½ï¿½24*24ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+void prt_hz24(int x, int y, char *s, unsigned int color, char *name);
 
+/*ï¿½ï¿½ï¿½ï¿½24ï¿½ï¿½ï¿½Ö¿ï¿½ï¿½ï¿½ï¿½24*24ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö£ï¿½ï¿½ï¿½ï¿½Ó³Ù£ï¿½*/
+void prt_hz24d(int x, int y, char *s, unsigned int color, char *name);
 
-void puthz(int x, int y,char *s,int flag,int part,int color);
+/*ï¿½ï¿½ï¿½ï¿½16ï¿½ï¿½ï¿½Ö¿ï¿½ï¿½ï¿½ï¿½16*xsize*16*ysizeï¿½ï¿½ï¿½ï¿½ï¿½Ö£ï¿½x,yï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ã£ï¿½xsize,ysizeÎªï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½
+sÎªï¿½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½colorï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½name Îªï¿½ï¿½ï¿½Ö¿ï¿½ï¿½Ä¼ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢*/
+void prt_hz16_size(int x, int y, int xsize, int ysize, char *s,
+                   unsigned int color, char *name);
 
+/*ï¿½ï¿½ï¿½ï¿½asc16ï¿½ï¿½ï¿½ï¿½Ö·ï¿½*/
+void prt_asc16(int x, int y, char *s, unsigned int color);
 
-/*µ÷ÓÃ16ºº×Ö¿âÊä³ö16*16µãÕóºº×Ö*/
-void prt_hz16(int x, int y, char *s, unsigned int color, char * name);
+/*ï¿½ï¿½ï¿½ï¿½asc16ï¿½ï¿½ï¿½ï¿½Ö·ï¿½*/
+void prt_asc16_ch(int x, int y, char s, unsigned int color);
 
-/*µ÷ÓÃ24ºº×Ö¿âÊä³ö24*24µãÕóÎÄ×Ö*/
-void prt_hz24(int x, int y,char * s, unsigned int color, char * name);
+/*ï¿½ï¿½È¡ASCIIï¿½ï¿½Ä£*/
+void Read_Asc16(char key, unsigned char *buf);
 
-/*µ÷ÓÃ24ºº×Ö¿âÊä³ö24*24µãÕóÎÄ×Ö£¨ÎÞÑÓ³Ù£©*/
-void prt_hz24d(int x, int y,char * s, unsigned int color, char * name);
+/*ï¿½ï¿½ï¿½ï¿½asc16ï¿½ï¿½ï¿½ï¿½Ö·ï¿½*/
+void Put_Asc16(int cx, int cy, char key, unsigned int color);
 
-/*µ÷ÓÃ16ºº×Ö¿âÊä³ö16*xsize*16*ysizeµãÕóºº×Ö£¬x,y±íÊ¾ºº×ÖÊä³öÎ»ÖÃ£¬xsize,ysizeÎª·Å´ó±¶Êý£¬
-sÎªºº×Ö´®£¬color±íÊ¾ºº×ÖÑÕÉ«£¬name Îªºº×Ö¿âÎÄ¼þÂ·¾¶£¬¼´×ÖÌåÐÅÏ¢*/
-void prt_hz16_size(int x, int y, int xsize,int ysize,char *s, unsigned int color, char * name);
+/*ï¿½ï¿½ï¿½ï¿½asc16ï¿½ï¿½ï¿½ï¿½Å´ï¿½ï¿½Ö·ï¿½*/
+void Put_Asc16_Size(int cx, int cy, int xsize, int ysize, char key,
+                    unsigned int color);
 
+/*ï¿½ï¿½ï¿½ï¿½asc16ï¿½ï¿½ï¿½ï¿½Å´ï¿½ï¿½Ö·ï¿½ï¿½ï¿½*/
+void put_asc16_size(int cx, int cy, int xsize, int ysize, char *s,
+                    unsigned int color);
 
-/*µ÷ÓÃasc16Êä³ö×Ö·û*/
-void prt_asc16( int x,int y,char  *s,unsigned int color);
+/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½16*xsize*16*ysizeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½16*xsize*16*ysize
+ascï¿½Ö·ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½x,yï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ã£ï¿½
+xsize,ysizeÎªï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½sÎªï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½colorï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½name Îªï¿½ï¿½ï¿½Ö¿ï¿½ï¿½Ä¼ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢*/
+void prt_hz16_asc16_size(int x, int y, int xsize, int ysize, char *s,
+                         unsigned int color, char *name);
 
-/*µ÷ÓÃasc16Êä³ö×Ö·û*/
-void prt_asc16_ch( int x,int y,char  s,unsigned int color);	
+/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½24*24ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½32*32 ascï¿½Ö·ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½x,yï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
+ï¿½ï¿½sÎªï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½colorï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½name Îªï¿½ï¿½ï¿½Ö¿ï¿½ï¿½Ä¼ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢*/
+void prt_hz24_asc32(int x, int y, char *s, unsigned int color, char *name);
 
-/*¶ÁÈ¡ASCII×ÖÄ£*/
-void Read_Asc16(char key,unsigned char *buf);
+/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½12*24ï¿½ï¿½ï¿½ï¿½Ò·ï¿½ï¿½Å£ï¿½ï¿½ï¿½ï¿½ï¿½*/
+void RMB(int x, int y, int xsize, int ysize, unsigned color);
 
-/*µ÷ÓÃasc16Êä³ö×Ö·û*/
-void Put_Asc16(int cx,int cy,char key,unsigned int color);
-
-/*µ÷ÓÃasc16Êä³ö·Å´ó×Ö·û*/
-void Put_Asc16_Size(int cx,int cy,int xsize,int ysize,char key,unsigned int color);
-
-/*µ÷ÓÃasc16Êä³ö·Å´ó×Ö·û´®*/
-void put_asc16_size(int cx,int cy,int xsize,int ysize,char *s,unsigned int color );
-
-/*Êä³ö¼ÈÓÐ16*xsize*16*ysizeºº×ÖÓÖÓÐ16*xsize*16*ysize asc×Ö·ûµÄ×Ö·û´®º¯Êý£¬x,y±íÊ¾ºº×ÖÊä³öÎ»ÖÃ£¬
-xsize,ysizeÎª·Å´ó±¶Êý£¬sÎª»ìºÏ×Ö·û´®£¬color±íÊ¾ºº×ÖÑÕÉ«£¬name Îªºº×Ö¿âÎÄ¼þÂ·¾¶£¬¼´×ÖÌåÐÅÏ¢*/
-void prt_hz16_asc16_size(int x, int y, int xsize,int ysize,char *s, unsigned int color, char * name);
-
-/*Êä³ö¼ÈÓÐ24*24ºº×ÖÓÖÓÐ32*32 asc×Ö·ûµÄ×Ö·û´®º¯Êý£¬x,y±íÊ¾ºº×ÖÊä³öÎ»ÖÃ
-£¬sÎª»ìºÏ×Ö·û´®£¬color±íÊ¾ºº×ÖÑÕÉ«£¬name Îªºº×Ö¿âÎÄ¼þÂ·¾¶£¬¼´×ÖÌåÐÅÏ¢*/
-void prt_hz24_asc32(int x, int y,char *s, unsigned int color, char * name);
-
-/*»­ÕûÊý±¶12*24ÈËÃñ±Ò·ûºÅ£¤º¯Êý*/
-void RMB(int x,int y,int xsize,int ysize,unsigned color);
-
-/***»­¹â±êº¯Êý***/ 
-void show_gb(int x,int y);
-/***ÐÅÏ¢ÊäÈëÊ±Ëù×öµÄÏàÍ¬²Ù×÷***/
-void Getinfo(int x1,int y1,char *pm,int num,int i);
-/***ÃÜÂëÊäÈëÊ±Ëù×öµÄÏàÍ¬²Ù×÷***/
-void Getcode(int x1,int y1,char *code,int num,int i);
-void Getnum(int x1,int y1,char *name,int num,int i);
+/***ï¿½ï¿½ï¿½ï¿½êº¯ï¿½ï¿½***/
+void show_gb(int x, int y);
+/***ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½***/
+void Getinfo(int x1, int y1, char *pm, int num, int i);
+/***ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½***/
+void Getcode(int x1, int y1, char *code, int num, int i);
+void Getnum(int x1, int y1, char *name, int num, int i);
 #endif
-
