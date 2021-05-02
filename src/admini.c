@@ -526,7 +526,7 @@ void ByBusNum()
           delay(100);
           ByBusF(&route,line);
       } else if(JudgeTime(year,month,day,yi,mi,di)==ERROR_CODE) {
-          InputError(line,start,end,2);
+		  InputError(line,start,end, 0, 0, 2);
           put_asc16_size(149,21,2,2,year,BLACK24);
           put_asc16_size(337,21,2,2,month,BLACK24);
           put_asc16_size(494,21,2,2,day,BLACK24);
