@@ -12,7 +12,7 @@
 #include "headers/run.h"
 #include "headers/stafunc.h"
 #include "headers/status.h"
-#include "headers/traveldata.h"
+#include "headers/trvldata.h"
 #include "headers/userdata.h"
 #include <bios.h>
 #include <conio.h>
@@ -69,8 +69,10 @@ void ShUsers(char users[][16])
            LIGHTGRAY24);
 
       SPeople(140 + j * 400, 160 + 60 * i);
+      if(*users[i+j*8]){
       put_asc16_size(300 + j * 400, 136 + 60 * i, 3, 3, users[i + j * 8],
                      BLACK24);
+      }
     }
   }
 }
@@ -159,7 +161,10 @@ void AChoose()
   Bar1(352, 330, 672, 390, LIGHTGRAY24);
   puthz(363, 343, "按用户查询", 48, 48, BLACK24);
   puthz(362, 342, "按用户查询", 48, 48, BLACK24);
-
+  Bar1(354, 422, 674, 482, BLACK24);
+  Bar1(352, 420, 672, 480, LIGHTGRAY24);
+  puthz(363, 433, "数据统计", 48, 48, BLACK24);
+  puthz(362, 432, "数据统计", 48, 48, BLACK24);
   Bar1(864, 718, 964, 768, BLACK24);
   Bar1(862, 716, 962, 766, LIGHTGRAY24);
   puthz(866, 720, "退出", 48, 48, BLACK24);
@@ -263,7 +268,7 @@ void ByBusF(Route *route, int line)
 {
   int page = 1;
   int rline=0;
-  if(line < 0)line = 0;
+  if(line<0)line=0;
   PuOne();
   ByBusTwo(route, page);
   DrawPage(page);
@@ -612,6 +617,7 @@ void UseHisF(UserInfo *user)
       line = 1;
       RelevantF(page, line, user);
       PuOne();
+      DrawPage(page);
       UserHis(user, page);
       MouseOn(mouse);
     }
@@ -621,6 +627,7 @@ void UseHisF(UserInfo *user)
       line = 2;
       RelevantF(page, line, user);
       PuOne();
+      DrawPage(page);
       UserHis(user, page);
       MouseOn(mouse);
     }
@@ -630,6 +637,7 @@ void UseHisF(UserInfo *user)
       line = 3;
       RelevantF(page, line, user);
       PuOne();
+      DrawPage(page);
       UserHis(user, page);
       MouseOn(mouse);
     }
@@ -639,6 +647,7 @@ void UseHisF(UserInfo *user)
       line = 4;
       RelevantF(page, line, user);
       PuOne();
+      DrawPage(page);
       UserHis(user, page);
       MouseOn(mouse);
     }
@@ -669,6 +678,7 @@ void ByUser()
   int line = 0;
   UserInfo user;
   char user_account[100][16];
+  memset(user_account,0,sizeof(user_account));
   FetchAllAccount(user_account);
   PuOne();
   ShUsers(user_account);
@@ -731,160 +741,200 @@ void ByUser()
     {
       MouseOff(&mouse);
       line = 1;
-      GetUserInfo(&user, user_account[(page - 1) + line - 1]);
-      UseHisF(&user);
-      PuOne();
-      DrawPage(page);
-      ShUsers(user_account);
+      if(*user_account[(page - 1) + line - 1]){
+      	memset(&user, 0, sizeof(UserInfo));
+      	GetUserInfo(&user, user_account[(page - 1) + line - 1]);
+        UseHisF(&user);
+        PuOne();
+        DrawPage(page);
+        ShUsers(user_account);
+	  } 
     }
     else if (MousePress(113, 192, 509, 248))
     {
       MouseOff(&mouse);
       line = 2;
-      GetUserInfo(&user, user_account[(page - 1) + line - 1]);
-      UseHisF(&user);
-      PuOne();
-      DrawPage(page);
-      ShUsers(user_account); 
+      if(*user_account[(page - 1) + line - 1]){
+      	memset(&user, 0, sizeof(UserInfo));
+      	GetUserInfo(&user, user_account[(page - 1) + line - 1]);
+        UseHisF(&user);
+        PuOne();
+        DrawPage(page);
+        ShUsers(user_account);
+	  }  
     }
     else if (MousePress(113, 252, 509, 308))
     {
       MouseOff(&mouse);
       line = 3;
-      GetUserInfo(&user, user_account[(page - 1) + line - 1]);
-      UseHisF(&user);
-      PuOne();
-      DrawPage(page);
-      ShUsers(user_account); 
+      if(*user_account[(page - 1) + line - 1]){
+      	memset(&user, 0, sizeof(UserInfo));
+      	GetUserInfo(&user, user_account[(page - 1) + line - 1]);
+        UseHisF(&user);
+        PuOne();
+        DrawPage(page);
+        ShUsers(user_account);
+	  }  
     }
     else if (MousePress(113, 312, 509, 368))
     {
       MouseOff(&mouse);
       line = 4;
-      GetUserInfo(&user, user_account[(page - 1) + line - 1]);
-      UseHisF(&user);
-      PuOne();
-      DrawPage(page);
-      ShUsers(user_account); 
+      if(*user_account[(page - 1) + line - 1]){
+      	memset(&user, 0, sizeof(UserInfo));
+      	GetUserInfo(&user, user_account[(page - 1) + line - 1]);
+        UseHisF(&user);
+        PuOne();
+        DrawPage(page);
+        ShUsers(user_account);
+	  }  
     }
     else if (MousePress(113, 372, 509, 428))
     {
       MouseOff(&mouse);
       line = 5;
-      GetUserInfo(&user, user_account[(page - 1) + line - 1]);
-      UseHisF(&user);
-      PuOne();
-      DrawPage(page);
-      ShUsers(user_account); 
+      if(*user_account[(page - 1) + line - 1]){
+      	memset(&user, 0, sizeof(UserInfo));
+      	GetUserInfo(&user, user_account[(page - 1) + line - 1]);
+        UseHisF(&user);
+        PuOne();
+        DrawPage(page);
+        ShUsers(user_account);
+	  } 
     }
     else if (MousePress(113, 432, 509, 488))
     {
       MouseOff(&mouse);
       line = 6;
-      GetUserInfo(&user, user_account[(page - 1) + line - 1]);
-      UseHisF(&user);
-      PuOne();
-      DrawPage(page);
-      ShUsers(user_account); 
+      if(*user_account[(page - 1) + line - 1]){
+      	memset(&user, 0, sizeof(UserInfo));
+      	GetUserInfo(&user, user_account[(page - 1) + line - 1]);
+        UseHisF(&user);
+        PuOne();
+        DrawPage(page);
+        ShUsers(user_account);
+	  }  
     }
     else if (MousePress(113, 492, 509, 548))
     {
       MouseOff(&mouse);
       line = 7;
-      GetUserInfo(&user, user_account[(page - 1) + line - 1]);
-      UseHisF(&user);
-      PuOne();
-      ShUsers(user_account); 
+      if(*user_account[(page - 1) + line - 1]){
+      	memset(&user, 0, sizeof(UserInfo));
+      	GetUserInfo(&user, user_account[(page - 1) + line - 1]);
+        UseHisF(&user);
+        PuOne();
+        DrawPage(page);
+        ShUsers(user_account);
+	  }  
     }
     else if (MousePress(113, 552, 509, 608))
     {
       MouseOff(&mouse);
       line = 8;
-      GetUserInfo(&user, user_account[(page - 1) + line - 1]);
-      UseHisF(&user);
-      PuOne();
-      DrawPage(page);
-      ShUsers(user_account); 
+      if(*user_account[(page - 1) + line - 1]){
+      	GetUserInfo(&user, user_account[(page - 1) + line - 1]);
+        UseHisF(&user);
+        PuOne();
+        DrawPage(page);
+        ShUsers(user_account);
+	  }  
     }
     else if (MousePress(515, 132, 911, 188))
     {
       MouseOff(&mouse);
       line = 9;
-      GetUserInfo(&user, user_account[(page - 1) + line - 1]);
-      UseHisF(&user);
-      PuOne();
-      DrawPage(page);
-      ShUsers(user_account); 
+      if(*user_account[(page - 1) + line - 1]){
+      	GetUserInfo(&user, user_account[(page - 1) + line - 1]);
+        UseHisF(&user);
+        PuOne();
+        DrawPage(page);
+        ShUsers(user_account);
+	  }  
     }
     else if (MousePress(515, 192, 911, 248))
     {
       MouseOff(&mouse);
       line = 10;
-      GetUserInfo(&user, user_account[(page - 1) + line - 1]);
-      UseHisF(&user);
-      PuOne();
-      DrawPage(page);
-      ShUsers(user_account); 
+      if(*user_account[(page - 1) + line - 1]){
+      	GetUserInfo(&user, user_account[(page - 1) + line - 1]);
+        UseHisF(&user);
+        PuOne();
+        DrawPage(page);
+        ShUsers(user_account);
+	  }  
     }
     else if (MousePress(515, 252, 911, 308))
     {
       MouseOff(&mouse);
       line = 11;
-      GetUserInfo(&user, user_account[(page - 1) + line - 1]);
-      UseHisF(&user);
-      PuOne();
-      DrawPage(page);
-      ShUsers(user_account); 
+      if(*user_account[(page - 1) + line - 1]){
+      	GetUserInfo(&user, user_account[(page - 1) + line - 1]);
+        UseHisF(&user);
+        PuOne();
+        DrawPage(page);
+        ShUsers(user_account);
+	  } 
     }
     else if (MousePress(515, 312, 911, 368))
     {
       MouseOff(&mouse);
       line = 12;
-      GetUserInfo(&user, user_account[(page - 1) + line - 1]);
-      UseHisF(&user);
-      PuOne();
-      DrawPage(page);
-      ShUsers(user_account);
+      if(*user_account[(page - 1) + line - 1]){
+      	GetUserInfo(&user, user_account[(page - 1) + line - 1]);
+        UseHisF(&user);
+        PuOne();
+        DrawPage(page);
+        ShUsers(user_account);
+	  } 
     }
     else if (MousePress(515, 372, 911, 428))
     {
       MouseOff(&mouse);
       line = 13;
-      GetUserInfo(&user, user_account[(page - 1) + line - 1]);
-      UseHisF(&user);
-      PuOne();
-      DrawPage(page);
-      ShUsers(user_account); 
+      if(*user_account[(page - 1) + line - 1]){
+      	GetUserInfo(&user, user_account[(page - 1) + line - 1]);
+        UseHisF(&user);
+        PuOne();
+        DrawPage(page);
+        ShUsers(user_account);
+	  }  
     }
     else if (MousePress(515, 432, 911, 488))
     {
       MouseOff(&mouse);
       line = 14;
-      GetUserInfo(&user, user_account[(page - 1) + line - 1]);
-      UseHisF(&user);
-      PuOne();
-      DrawPage(page);
-      ShUsers(user_account); 
+      if(*user_account[(page - 1) + line - 1]){
+      	GetUserInfo(&user, user_account[(page - 1) + line - 1]);
+        UseHisF(&user);
+        PuOne();
+        DrawPage(page);
+        ShUsers(user_account);
+	  }  
     }
     else if (MousePress(515, 492, 911, 548))
     {
       MouseOff(&mouse);
       line = 15;
-      GetUserInfo(&user, user_account[(page - 1) + line - 1]);
-      UseHisF(&user);
-      PuOne();
-      DrawPage(page);
-      ShUsers(user_account); 
+      if(*user_account[(page - 1) + line - 1]){
+      	GetUserInfo(&user, user_account[(page - 1) + line - 1]);
+        UseHisF(&user);
+        PuOne();
+        DrawPage(page);
+        ShUsers(user_account);
+	  }  
     }
     else if (MousePress(515, 552, 911, 608))
     {
       MouseOff(&mouse);
       line = 16;
-      GetUserInfo(&user, user_account[(page - 1) + line - 1]);
-      UseHisF(&user);
-      PuOne();
-      DrawPage(page);
-      ShUsers(user_account); 
+      if(*user_account[(page - 1) + line - 1]){
+      	GetUserInfo(&user, user_account[(page - 1) + line - 1]);
+        UseHisF(&user);
+        PuOne();
+        DrawPage(page);
+        ShUsers(user_account);
+	  } 
     }
     else if (MousePress(906, 710, 1022, 766))
     {
@@ -892,6 +942,71 @@ void ByUser()
       AChoose();
       break;
     }
+  }
+}
+void Statistics()
+{
+  int health,fever,infect,all,i,j;
+  char h[10];
+  char f[10];
+  char in[10];
+  char a[10];
+  char user_account[40][16];
+  UserInfo user;
+  health=0;
+  fever=0;
+  infect=0;
+  h[0] = '\0';
+  f[0] = '\0';
+  in[0] = '\0';
+  a[0] = '\0';  
+  i=0;
+  memset(user_account,0,sizeof(user_account));
+  FetchAllAccount(user_account);
+  while(*user_account[i]){
+  	memset(&user, 0, sizeof(UserInfo));
+  	GetUserInfo(&user,user_account[i]);
+  	for(j=0;j<user.nhistory;j++) {
+  		if(user.history_lines[j].note==0){
+  			health++;
+		  } else if((user.history_lines[j].note==1)) {
+		  	fever++;
+		  } else if((user.history_lines[j].note==2)) {
+		  	infect++;
+		  }
+	  }
+	i++;  
+  }
+  all=health+fever+infect;
+  itoa(health,h,10);
+  itoa(fever,f,10);
+  itoa(infect,in,10);
+  itoa(all,a,10);
+  Bar1(0,0,1024,768,DARKCYAN24);
+  Bar1(332,20,432,60,GREEN24); 
+  puthz(334,24,"未发热",32,32,BLACK24);
+  Bar1(462,20,562,60,YELLOW24);
+  puthz(477,24,"发热",32,35,BLACK24);
+  Bar1(592,20,692,60,LIGHTRED24);
+  puthz(597,24,"确诊",32,35,BLACK24);
+  returnbut();
+  Line_Thick(150,150,150,600,2,BLACK24);
+  puthz(350,620,"共计",32,32,BLACK24);
+  put_asc16_size(420,620,2,2,a,WHITE24);
+  puthz(500,620,"条上报的行程记录",32,32,BLACK24);
+  Bar1(150,195,150+health*5,255,GREEN24);
+  put_asc16_size(160+health*5,209,2,2,h,WHITE24);
+  Bar1(150,345,150+fever*5,405,YELLOW24);
+  put_asc16_size(160+fever*5,359,2,2,f,WHITE24);
+  Bar1(150,495,150+infect*5,555,LIGHTRED24);
+  put_asc16_size(160+infect*5,509,2,2,in,WHITE24);
+  Mouse_Init();
+  while(1) {
+  	MouseShow(&mouse);
+  	if(MousePress(906, 710, 1022, 766)) {
+  		MouseOff(&mouse);
+  		break;
+	  }
   }
 }
 void AdminiFunc()
@@ -911,6 +1026,13 @@ void AdminiFunc()
       MouseOff(&mouse);
       ByUser();
     }
+    else if(MousePress(352,420,672,480)) 
+	{
+	  MouseOff(&mouse);
+	  Statistics();
+	  MouseOff(&mouse);
+	  AChoose(); 
+	} 
     else if (MousePress(862, 716, 962, 766))
     {
       MouseOff(&mouse);

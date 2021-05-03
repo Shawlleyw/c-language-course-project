@@ -25,7 +25,7 @@ function DrawRunWindow:
     返回值：成功返回SUCCESS_CODE,失败返回ERROR_CODE
 */
 STATUS_CODE DrawRunWindow(UserInfo *user);
-STATUS_CODE DisplayLine(int line);
+STATUS_CODE DisplayLine(int line, int rev);
 
 STATUS_CODE SelectMap();
 /*
@@ -55,6 +55,8 @@ STATUS_CODE PaintStations(Lines *l, int ids, int ide);
 
 STATUS_CODE DisplayTraces(int line, int start, int end, int rev, int round);
 
-char *CalcMapName(char *path, int line);
+char *CalcMapName(char *path, int line, int rev);
+
+void CirclePoint(int x,int y,int color);
 
 #endif

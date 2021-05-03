@@ -24,4 +24,5 @@ void UseHisF(UserInfo *user);
 void ByUser(void);
 void AdminiFunc(void);
 void ByBusF(Route *route, int line);
+void Statistics(void);
 #endif

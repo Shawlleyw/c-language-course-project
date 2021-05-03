@@ -1,6 +1,7 @@
 #ifndef TRAFFIC_HEADERS_TRAVELDATA_H_
 #define TRAFFIC_HEADERS_TRAVELDATA_H_
 #include "headers/status.h"
+#include "headers/info.h"
 
 /*
 function ReadRoute:

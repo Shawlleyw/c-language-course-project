@@ -358,15 +358,18 @@ void RSign_in()
       if (strcmp(account, "shhwsy") == 0 && strcmp(password, "shhwsy") == 0)
       {
         AdminiFunc();
+        MouseOff(&mouse);
         AdSign();
+        MouseOn(mouse);
         account[0] = '\0';
         password[0] = '\0';
       }
       else if (strcpy(account, "shhwsy") != 0 && (password, "shhwsy") != 0)
       {
         Nopermis();
-        AdSign();
         MouseOff(&mouse);
+        AdSign();
+        MouseOn(mouse);
         account[0] = '\0';
         password[0] = '\0';
       }
@@ -390,10 +393,9 @@ STATUS_CODE RegisterFunc(char *user_account)
     {
       MouseOff(&mouse);
       delay(100);
-      MouseOn(mouse);
       RSign_in(); 
-      DrawEntryWindow();
       MouseOff(&mouse);
+      DrawEntryWindow();
       flagc = 0; /////////////////////////////////////////
       delay(100);
       MouseOn(mouse);

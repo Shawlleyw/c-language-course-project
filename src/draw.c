@@ -396,9 +396,9 @@ void RSelectMaps()
 
 void AddBox1()
 {
-  Bar1(0,560,1024,705,LIGHTGRAY24);
-  Bar1(782,708,902,768,LIGHTGRAY24);
-  Bar1(0,560,1024,705,LIGHTGRAY24);
+  Bar1(135,560,1024,705,LIGHTGRAY24);
+  //Bar1(782,708,902,768,LIGHTGRAY24);
+  //Bar1(0,560,1024,705,LIGHTGRAY24);
   Bar1(208,598,462,662,BLACK24);
   Bar1(212,602,458,658,LIGHTGRAY24);
   puthz(215,605,"添加起点站",48,48,BLACK24);
@@ -414,8 +414,9 @@ void AddBox1()
 
 void AddBox2()
 {
-  Bar1(0,560,1024,705,LIGHTGRAY24);
+  Bar1(135,560,1024,705,LIGHTGRAY24);
   Bar1(782,708,902,768,LIGHTGRAY24);
+  Bar1(135,705,150,768,LIGHTGRAY24); 
   puthz(369,566,"录入上车时间",48,48,BLACK24);
   puthz(368,565,"录入上车时间",48,48,NAVY24);
   Bar1(145,642,275,692,WHITE24);
@@ -434,10 +435,10 @@ void AddBox2()
 
 void AddBox3()
 {
-  Bar1(0,560,1024,705,LIGHTGRAY24);
-  puthz(100,590,"近十四天是否有发热症状",48,48,BLACK24);
+  Bar1(135,560,1024,705,LIGHTGRAY24);
+  puthz(120,590,"近十四天是否有发热症状",48,48,BLACK24);
   YNbut(1);
-  puthz(100,650,"乘车至今是否确诊为新冠患者",48,48,BLACK24);
+  puthz(120,650,"乘车至今是否确诊为新冠患者",48,48,BLACK24);
   YNbut(4);
   Bar1(782,708,902,768,DARKGRAY24);
   Bar1(784,710,900,766,LIGHTGRAY24);
@@ -448,31 +449,31 @@ void AddBox3()
 void YNbut(int cho)
 {
   if(cho==1) {
-    Bar1(639,589,689,639,LIGHTGRAY24);
-    bar3(639,589,689,639,WHITE24);
-    puthz(640,590,"是",48,48,BLACK24);
-    Bar1(692,589,742,639,LIGHTGRAY24);
-    bar3(692,589,742,639,WHITE24);
-    puthz(693,590,"否",48,48,BLACK24);
+    Bar1(659,589,709,639,LIGHTGRAY24);
+    bar3(659,589,709,639,WHITE24);
+    puthz(660,590,"是",48,48,BLACK24);
+    Bar1(712,589,762,639,LIGHTGRAY24);
+    bar3(712,589,762,639,WHITE24);
+    puthz(713,590,"否",48,48,BLACK24);
   } else if(cho==2) {
-    Bar1(639,589,689,639,DARKGRAY24);
-    puthz(640,590,"是",48,48,RED24);
-    Bar1(692,589,742,639,LIGHTGRAY24);
-    bar3(692,589,742,639,WHITE24);
-    puthz(693,590,"否",48,48,BLACK24);
+    Bar1(659,589,709,639,DARKGRAY24);
+    puthz(660,590,"是",48,48,RED24);
+    Bar1(712,589,762,639,LIGHTGRAY24);
+    bar3(712,589,762,639,WHITE24);
+    puthz(713,590,"否",48,48,BLACK24);
   } else if(cho==3) {
-    Bar1(639,589,689,639,LIGHTGRAY24);
-    bar3(639,589,689,639,WHITE24);
-    puthz(640,590,"是",48,48,BLACK24);
-    Bar1(692,589,742,639,DARKGRAY24);
-    puthz(693,590,"否",48,48,GREEN24);
+    Bar1(659,589,709,639,LIGHTGRAY24);
+    bar3(659,589,709,639,WHITE24);
+    puthz(660,590,"是",48,48,BLACK24);
+    Bar1(712,589,762,639,DARKGRAY24);
+    puthz(713,590,"否",48,48,GREEN24);
   } else if(cho==4) {
-    Bar1(739,649,789,699,LIGHTGRAY24);
-    bar3(739,649,789,699,WHITE24);
-    puthz(740,650,"是",48,48,BLACK24);
+    Bar1(759,649,809,699,LIGHTGRAY24);
+    bar3(759,649,809,699,WHITE24);
+    puthz(760,650,"是",48,48,BLACK24);
   } else if(cho==5) {
-    Bar1(739,649,789,699,DARKGRAY24);
-	puthz(740,650,"是",48,48,RED24);
+    Bar1(759,649,809,699,DARKGRAY24);
+	puthz(760,650,"是",48,48,RED24);
 	}
 }
 

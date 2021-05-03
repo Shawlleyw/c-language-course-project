@@ -12,7 +12,7 @@
 #include "headers/run.h"
 #include "headers/stafunc.h"
 #include "headers/status.h"
-#include "headers/traveldata.h"
+#include "headers/trvldata.h"
 #include "headers/userdata.h"
 #include <bios.h>
 #include <conio.h>
@@ -28,7 +28,7 @@ void RecordTrace(UserInfo *user, int page, int line, int c)
   if (c == 1)
   {
     Bar1(0, 0, 1024, 768, DARKCYAN24);
-    DisplayLine(user->history_lines[cur].line_no);
+	DisplayLine(user->history_lines[cur].line_no, CheckRev(user->history_lines[cur].busnum));
     DisplayTraces(user->history_lines[cur].line_no,
                   user->history_lines[cur].start, user->history_lines[cur].end,
                   CheckRev(user->history_lines[cur].busnum),
@@ -41,7 +41,7 @@ void RecordTrace(UserInfo *user, int page, int line, int c)
   else if (c == 2)
   {
     Bar1(0, 0, 1024, 768, DARKCYAN24);
-    DisplayLine(user->history_lines[cur].line_no);
+	DisplayLine(user->history_lines[cur].line_no, CheckRev(user->history_lines[cur].busnum));
     DisplayTraces(user->history_lines[cur].line_no,
                   user->history_lines[cur].start, user->history_lines[cur].end,
                   CheckRev(user->history_lines[cur].busnum),

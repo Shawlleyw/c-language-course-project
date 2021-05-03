@@ -1,9 +1,9 @@
 #include "headers/judge.h"
+#include "headers/trvldata.h"
 #include "headers/add.h"
 #include "headers/admini.h"
 #include "headers/calcpath.h"
 #include "headers/draw.h"
-#include "headers/traveldata.h"
 #include "headers/hisbox.h"
 #include "headers/hz.h"
 #include "headers/info.h"
@@ -30,7 +30,6 @@ STATUS_CODE JudgeTime(char *year, char *month, char *day, int yi, int mi, int di
   yk = 0;
   mk = 0;
   dk = 0;
-  di = 0;
   for (i = 0; i < yi; i++)
   {
     yk = yk * 10 + (year[i] - '0');
@@ -227,7 +226,7 @@ void InputError(int line, int start, int end, int rev, int round, int k)
       MouseOff(&mouse);
       if (k == 1)
       {
-        DisplayLine(line);
+        DisplayLine(line, rev);
         if (start != 0 && end != 0)
         {
           DisplayTraces(line, start, end, rev, round);

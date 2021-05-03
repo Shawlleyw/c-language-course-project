@@ -14,6 +14,7 @@
 #include "headers/stafunc.h"
 #include "headers/status.h"
 #include "headers/userdata.h"
+#include "trvldata.h"
 #include <bios.h>
 #include <conio.h>
 #include <dos.h>
@@ -65,7 +66,11 @@ void ReadLineInfo(Lines *l, int line)
   fclose(fp);
   fp = NULL;
 }
-
+void CirclePoint(int x,int y,int color)
+{
+   Circlefill(x,y,15,color);
+   Circlefill(x,y,9,LIGHTRED24);
+}
 void DrawStart(int start)
 {
   char path[32];
@@ -75,10 +80,13 @@ void DrawStart(int start)
   fp = fopen(path, "rb");
   fread(&cur, sizeof(Sta), 1, fp);
   Circlefill(cur.x, cur.y, 9, LIGHTRED24);
+  CirclePoint(cur.x,cur.y,GREEN24);
+  CirclePoint(16,600,GREEN24);
+  Bar1(32,586,106,614,DARKGRAY24);
+  puthz(33,588,"∆µ„’æ",24,24,LIGHTGRAY24);
   fclose(fp);
   fp = NULL;
 }
-
 void DrawEnd(int end)
 {
   char path[32];
@@ -88,6 +96,10 @@ void DrawEnd(int end)
   fp = fopen(path, "rb");
   fread(&cur, sizeof(Sta), 1, fp);
   Circlefill(cur.x, cur.y, 9, LIGHTRED24);
+  CirclePoint(cur.x,cur.y,NAVY24);
+  CirclePoint(16,640,NAVY24);
+  Bar1(32,626,106,654,DARKGRAY24);
+  puthz(33,628,"÷’µ„’æ",24,24,LIGHTGRAY24);
   fclose(fp);
   fp = NULL;
 }
@@ -185,9 +197,11 @@ STATUS_CODE DisplayTraces(int line, int start, int end, int rev, int round)
   return SUCCESS_CODE;
 }
 
-char *CalcMapName(char *path, int line)
+char *CalcMapName(char *path, int line, int rev)
 {
   int len;
+  line --;
+  if(rev == 1)line += 5;
   strcpy(path, "data/maps/ditu");
   len = strlen(path);
   path[len] = line + '0';
@@ -196,11 +210,11 @@ char *CalcMapName(char *path, int line)
   return path;
 }
 
-STATUS_CODE DisplayLine(int line)
+STATUS_CODE DisplayLine(int line, int rev)
 {
   char path[32];
   Bar1(0, 0, 1024, 560, DARKCYAN24);
-  CalcMapName(path, line);
+  CalcMapName(path, line, rev);
   Readbmp64k(0, 0, path);
   return SUCCESS_CODE;
 }

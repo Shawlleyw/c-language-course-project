@@ -12,7 +12,7 @@
 #include "headers/run.h"
 #include "headers/stafunc.h"
 #include "headers/status.h"
-#include "headers/traveldata.h"
+#include "headers/trvldata.h"
 #include "headers/userdata.h"
 #include <bios.h>
 #include <conio.h>
@@ -86,7 +86,8 @@ void AddHis(char *account, int line, UserInfo *user,
 				  
 		  if(UserExistedOnBus(route_name,user->name)==1) {
 		  	Errortime();
-		  	DisplayLine(line);
+		  	DisplayLine(line, page == 2);
+			DisplayTraces(line, start, end, page == 2, line == 1);
 		  	year[0] = '\0';
 		  	month[0] = '\0';
 		  	day[0] = '\0';
@@ -155,7 +156,7 @@ void AddHis(char *account, int line, UserInfo *user,
             ERROR_CODE)
         {
           ErrorTrace();
-          DisplayLine(line);
+          DisplayLine(line, page == 2);
           AddBox1();
           Dflag = 1;
           start=0;
@@ -177,7 +178,7 @@ void AddHis(char *account, int line, UserInfo *user,
             ERROR_CODE)
         {
           ErrorTrace();
-          DisplayLine(line);
+          DisplayLine(line, page == 2);
           AddBox1();
           Dflag = 1;
           start=0;
@@ -221,7 +222,7 @@ void AddHis(char *account, int line, UserInfo *user,
       Getnum(653, 643, bnum, 2, bi);
       MouseOn(mouse);
     }
-    else if (MousePress(639, 589, 689, 639) && Dflag == 3)
+    else if (MousePress(659, 589, 709, 639) && Dflag == 3)
     {
       MouseOff(&mouse);
       YNbut(2);
@@ -229,7 +230,7 @@ void AddHis(char *account, int line, UserInfo *user,
       YNbut(4);
       MouseOn(mouse);
     }
-    else if (MousePress(692, 589, 742, 639) && Dflag == 3)
+    else if (MousePress(712, 589, 762, 639) && Dflag == 3)
     {
       MouseOff(&mouse);
       YNbut(3);
@@ -237,7 +238,7 @@ void AddHis(char *account, int line, UserInfo *user,
       YNbut(4);
       MouseOn(mouse);
     }
-    else if (MousePress(739, 649, 789, 699) && Dflag == 3)
+    else if (MousePress(759, 649, 809, 699) && Dflag == 3)
     {
       MouseOff(&mouse);
       YNbut(5);
@@ -278,7 +279,7 @@ void AddFunc(UserInfo *user)
     {
       MouseOff(&mouse);
       line = 1;
-      DisplayLine(line);
+      DisplayLine(line, page == 2);
       AddHis(user->account, line, user, page);
       page = 1;
       MouseOn(mouse);
@@ -287,7 +288,7 @@ void AddFunc(UserInfo *user)
     {
       MouseOff(&mouse);
       line = 3;
-      DisplayLine(line);
+      DisplayLine(line, page == 2);
       AddHis(user->account, line, user, page);
       page = 1;
       MouseOn(mouse);
@@ -296,7 +297,7 @@ void AddFunc(UserInfo *user)
     {
       MouseOff(&mouse);
       line = 4;
-      DisplayLine(line);
+      DisplayLine(line, page == 2);
       AddHis(user->account, line, user, page);
       page = 1;
       MouseOn(mouse);
@@ -305,7 +306,7 @@ void AddFunc(UserInfo *user)
     {
       MouseOff(&mouse);
       line = 5;
-      DisplayLine(line);
+      DisplayLine(line, page == 2);
       AddHis(user->account, line, user, page);
       page = 1;
       MouseOn(mouse);
@@ -341,45 +342,45 @@ STATUS_CODE SelectMap()
   Mouse_Init();
   while (1)
   {
-    MouseShow(&mouse);
-    if (MousePress(218, 96, 806, 174))
-    {
-      MouseOff(&mouse);
-      Bar1(0, 0, 1024, 768, DARKCYAN24);
-      returnbut();
-      DisplayLine(1);
-      ShowSta(1);
-      Maps();
-      MouseOn(mouse);
-    }
-    else if (MousePress(218, 96 + 170, 806, 174 + 170))
-    {
-      MouseOff(&mouse);
-      Bar1(0, 0, 1024, 768, DARKCYAN24);
-      returnbut();
-      DisplayLine(3);
-      ShowSta(3);
-      Maps();
-      MouseOn(mouse);
-    }
-    else if (MousePress(218, 96 + 340, 806, 174 + 340))
-    {
-      MouseOff(&mouse);
-      Bar1(0, 0, 1024, 768, DARKCYAN24);
-      returnbut();
-      DisplayLine(4);
-      ShowSta(4);
-      Maps();
-      MouseOn(mouse);
-    }
-    else if (MousePress(218, 96 + 510, 806, 174 + 510))
-    {
-      MouseOff(&mouse);
-      Bar1(0, 0, 1024, 768, DARKCYAN24);
-      returnbut();
-      DisplayLine(5);
-      ShowSta(5);
-      Maps();
+	MouseShow(&mouse);
+	if (MousePress(218, 96, 806, 174))
+	{
+	  MouseOff(&mouse);
+	  Bar1(0, 0, 1024, 768, DARKCYAN24);
+	  returnbut();
+	  DisplayLine(1, 0);
+	  ShowSta(1);
+	  Maps();
+	  MouseOn(mouse);
+	}
+	else if (MousePress(218, 96 + 170, 806, 174 + 170))
+	{
+	  MouseOff(&mouse);
+	  Bar1(0, 0, 1024, 768, DARKCYAN24);
+	  returnbut();
+	  DisplayLine(3, 0);
+	  ShowSta(3);
+	  Maps();
+	  MouseOn(mouse);
+	}
+	else if (MousePress(218, 96 + 340, 806, 174 + 340))
+	{
+	  MouseOff(&mouse);
+	  Bar1(0, 0, 1024, 768, DARKCYAN24);
+	  returnbut();
+	  DisplayLine(4, 0);
+	  ShowSta(4);
+	  Maps();
+	  MouseOn(mouse);
+	}
+	else if (MousePress(218, 96 + 510, 806, 174 + 510))
+	{
+	  MouseOff(&mouse);
+	  Bar1(0, 0, 1024, 768, DARKCYAN24);
+	  returnbut();
+	  DisplayLine(5, 0);
+	  ShowSta(5);
+	  Maps();
       MouseOn(mouse);
     }
     else if (MousePress(906, 710, 1022, 766))

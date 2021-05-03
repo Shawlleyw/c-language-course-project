@@ -835,7 +835,7 @@ int Stak(int line, int x, int y, int func, int note, int Sflag, int lim)
       RecordBox(1);
       choose = 1;
     }
-    else if (MousePress(639, 589, 689, 639) && func == 2 && choose == 1 &&
+    else if (MousePress(659, 589, 709, 639) && func == 2 && choose == 1 &&
              lim == 1)
     {
       MouseOff(&mouse);
@@ -844,7 +844,7 @@ int Stak(int line, int x, int y, int func, int note, int Sflag, int lim)
       YNbut(4);
       MouseOn(mouse);
     }
-    else if (MousePress(692, 589, 742, 639) && func == 2 && choose == 1 &&
+    else if (MousePress(712, 589, 762, 639) && func == 2 && choose == 1 &&
              lim == 1)
     {
       MouseOff(&mouse);
@@ -853,7 +853,7 @@ int Stak(int line, int x, int y, int func, int note, int Sflag, int lim)
       YNbut(4);
       MouseOn(mouse);
     }
-    else if (MousePress(739, 649, 789, 699) && func == 2 && choose == 1 &&
+    else if (MousePress(759, 649, 809, 699) && func == 2 && choose == 1 &&
              lim == 1)
     {
       MouseOff(&mouse);
@@ -870,6 +870,12 @@ int Stak(int line, int x, int y, int func, int note, int Sflag, int lim)
       Bar1(0, 560, 1024, 768, DARKCYAN24);
       Bar1(414, 672, 614, 722, BLACK24);
       Bar1(412, 670, 612, 720, LIGHTGRAY24);
+      CirclePoint(16,600,GREEN24);
+      Bar1(32,586,106,614,DARKGRAY24);
+      puthz(33,588,"起点站",24,24,LIGHTGRAY24);
+      CirclePoint(16,640,NAVY24);
+      Bar1(32,626,106,654,DARKGRAY24);
+      puthz(33,628,"终点站",24,24,LIGHTGRAY24);
       puthz(416, 671, "发热上报", 48, 48, BLACK24);
       returnbut();
       choose = 0;
@@ -883,6 +889,12 @@ int Stak(int line, int x, int y, int func, int note, int Sflag, int lim)
       Bar1(0, 560, 1024, 768, DARKCYAN24);
       Bar1(414, 672, 614, 722, BLACK24);
       Bar1(412, 670, 612, 720, LIGHTGRAY24);
+      CirclePoint(16,600,GREEN24);
+      Bar1(32,586,106,614,DARKGRAY24);
+      puthz(33,588,"起点站",24,24,LIGHTGRAY24);
+      CirclePoint(16,640,NAVY24);
+      Bar1(32,626,106,654,DARKGRAY24);
+      puthz(33,628,"终点站",24,24,LIGHTGRAY24);
       puthz(416, 671, "发热上报", 48, 48, BLACK24);
       returnbut();
       choose = 0;

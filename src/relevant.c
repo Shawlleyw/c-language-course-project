@@ -90,7 +90,7 @@ void Relevant(Route *route, int rpage, UserInfo *user)
 void RPTrace(Route *route, int page, int line)
 {
   Bar1(0, 0, 1024, 768, DARKCYAN24);
-  DisplayLine(route->line);
+  DisplayLine(route->line, CheckRev(route->route_name));
   DisplayTraces(route->line, route->ps[(page - 1) * 4 + line - 1].start,
                 route->ps[(page - 1) * 4 + line - 1].end,
                 CheckRev(route->route_name), CheckRound(route->route_name));
