@@ -25,10 +25,9 @@
 void RecordTrace(UserInfo *user, int page, int line, int c)
 {
   int cur = (page - 1) * 4 + line - 1;
-  if (c == 1)
-  {
+  if (c == 1) {
     Bar1(0, 0, 1024, 768, DARKCYAN24);
-	DisplayLine(user->history_lines[cur].line_no, CheckRev(user->history_lines[cur].busnum));
+    DisplayLine(user->history_lines[cur].line_no, CheckRev(user->history_lines[cur].busnum));
     DisplayTraces(user->history_lines[cur].line_no,
                   user->history_lines[cur].start, user->history_lines[cur].end,
                   CheckRev(user->history_lines[cur].busnum),
@@ -37,11 +36,9 @@ void RecordTrace(UserInfo *user, int page, int line, int c)
     Bar1(412, 670, 612, 720, LIGHTGRAY24);
     puthz(416, 671, "发热上报", 48, 48, BLACK24);
     returnbut();
-  }
-  else if (c == 2)
-  {
+  } else if (c == 2) {
     Bar1(0, 0, 1024, 768, DARKCYAN24);
-	DisplayLine(user->history_lines[cur].line_no, CheckRev(user->history_lines[cur].busnum));
+    DisplayLine(user->history_lines[cur].line_no, CheckRev(user->history_lines[cur].busnum));
     DisplayTraces(user->history_lines[cur].line_no,
                   user->history_lines[cur].start, user->history_lines[cur].end,
                   CheckRev(user->history_lines[cur].busnum),
@@ -53,14 +50,11 @@ void RecordTrace(UserInfo *user, int page, int line, int c)
 
 void RecordBox(int i)
 {
-  if (i == 0)
-  {
+  if (i == 0) {
     Bar1(0, 560, 1024, 768, DARKCYAN24);
     Line_Thick(362, 720, 662, 720, 2, BLACK24);
     returnbut();
-  }
-  else if (i == 1)
-  {
+  } else if (i == 1) {
     Bar1(0, 560, 1024, 768, LIGHTGRAY24);
     returnbut();
     AddBox3();
@@ -81,8 +75,8 @@ void RecordFunc(UserInfo *user, int page, int line)
 {
   RecordTrace(user, page, line, 1);
   user->history_lines[(page - 1) * 4 + line - 1].note =
-      Stak(user->history_lines[(page - 1) * 4 + line - 1].line_no, 410, 600, 2,
-           user->history_lines[(page - 1) * 4 + line - 1].note, 0, 1);
+    Stak(user->history_lines[(page - 1) * 4 + line - 1].line_no, 410, 600, 2,
+         user->history_lines[(page - 1) * 4 + line - 1].note, 0, 1);
   OverrideUserInfo(user->account, user);
 }
 
@@ -95,7 +89,7 @@ void RelevantF(int page, int line,
   Route route;
   char route_name[16];
 
-  strcpy(route_name, user->history_lines[(page - 1) * 4 + line - 1].busnum); 
+  strcpy(route_name, user->history_lines[(page - 1) * 4 + line - 1].busnum);
 
   ReadRoute(&route, route_name);
 
@@ -103,107 +97,79 @@ void RelevantF(int page, int line,
   DrawPage(rpage);
   Relevant(&route, rpage, user);
   Mouse_Init();
-  while (1)
-  {
+  while (1) {
     MouseShow(&mouse);
-    if (MousePress(572, 619, 674, 659))
-    {
-      if (rpage == 1)
-      {
+    if (MousePress(572, 619, 674, 659)) {
+      if (rpage == 1) {
         rpage = 2;
         DrawPage(rpage);
         Relevant(&route, rpage, user);
         delay(100);
-      }
-      else if (rpage == 2)
-      {
+      } else if (rpage == 2) {
         rpage = 3;
         DrawPage(rpage);
         Relevant(&route, rpage, user);
         delay(100);
-      }
-      else if (rpage == 3)
-      {
+      } else if (rpage == 3) {
         rpage = 4;
         DrawPage(rpage);
         Relevant(&route, rpage, user);
         delay(100);
       }
-    }
-    else if (MousePress(350, 619, 450, 659))
-    {
-      if (rpage == 2)
-      {
+    } else if (MousePress(350, 619, 450, 659)) {
+      if (rpage == 2) {
         rpage = 1;
         DrawPage(rpage);
         Relevant(&route, rpage, user);
         delay(100);
-      }
-      else if (rpage == 3)
-      {
+      } else if (rpage == 3) {
         rpage = 2;
         DrawPage(rpage);
         Relevant(&route, rpage, user);
         delay(100);
-      }
-      else if (rpage == 4)
-      {
+      } else if (rpage == 4) {
         rpage = 3;
         DrawPage(rpage);
         Relevant(&route, rpage, user);
         delay(100);
       }
-    }
-    else if (MousePress(904, 708, 1024, 768))
-    {
+    } else if (MousePress(904, 708, 1024, 768)) {
       MouseOff(&mouse);
       break;
-    }
-    else if (MousePress(760, 152, 858, 186))
-    {
-      MouseOff(&mouse); 
+    } else if (MousePress(760, 152, 858, 186)) {
+      MouseOff(&mouse);
       rline = 1;
-      if (route.npassenger > (rpage - 1) * 4 + rline - 1)
-      {
+      if (route.npassenger > (rpage - 1) * 4 + rline - 1) {
         RPTrace(&route, rpage, rline);
         PuOne();
         Relevant(&route, rpage, user);
         DrawPage(rpage);
       }
       MouseOn(mouse);
-    }
-    else if (MousePress(760, 272, 858, 306))
-    {
+    } else if (MousePress(760, 272, 858, 306)) {
       MouseOff(&mouse);
       rline = 2;
-      if (route.npassenger > (rpage - 1) * 4 + rline - 1)
-      {
+      if (route.npassenger > (rpage - 1) * 4 + rline - 1) {
         RPTrace(&route, rpage, rline);
         PuOne();
         Relevant(&route, rpage, user);
         DrawPage(rpage);
       }
       MouseOn(mouse);
-    }
-    else if (MousePress(760, 392, 858, 426))
-    {
+    } else if (MousePress(760, 392, 858, 426)) {
       MouseOff(&mouse);
       rline = 3;
-      if (route.npassenger > (rpage - 1) * 4 + rline - 1)
-      {
+      if (route.npassenger > (rpage - 1) * 4 + rline - 1) {
         RPTrace(&route, rpage, rline);
         PuOne();
         Relevant(&route, rpage, user);
         DrawPage(rpage);
       }
       MouseOn(mouse);
-    }
-    else if (MousePress(760, 512, 858, 546))
-    {
-      MouseOff(&mouse); 
+    } else if (MousePress(760, 512, 858, 546)) {
+      MouseOff(&mouse);
       rline = 4;
-      if (route.npassenger > (rpage - 1) * 4 + rline - 1)
-      {
+      if (route.npassenger > (rpage - 1) * 4 + rline - 1) {
         RPTrace(&route, rpage, rline);
         PuOne();
         Relevant(&route, rpage, user);

@@ -67,16 +67,14 @@ void DrawBus()
   Circlefill(250, 320, 20, 0x7bef);
   Circlefill(774, 320, 20, 0x7bef);
 
-  for (i = 0; i < 2; i++)
-  {
+  for (i = 0; i < 2; i++) {
     bar3(322 + i * 250, 110, 402 + i * 250, 290, 0xffe0);
     Circlefill(362 + i * 250, 150, 20, 0x07ff);
     Circle(362 + i * 250, 150, 20, 0xfde0);
     Circle(362 + i * 250, 150, 21, 0xfde0);
     Circle(362 + i * 250, 150, 19, 0xfde0);
   }
-  for (i = 0; i < 3; i++)
-  {
+  for (i = 0; i < 3; i++) {
     bar3(172 + i * 250, 120, 302 + i * 250, 180, 0xffff);
     Line1(235 + i * 250, 120, 235 + i * 250, 180, 0xffff);
     Line1(234 + i * 250, 120, 234 + i * 250, 180, 0xffff);
@@ -183,8 +181,7 @@ void Maps()
   int i;
   Bar1(0, 0, 1024, 768, DARKCYAN24);
   returnbut();
-  for (i = 0; i < 4; i++)
-  {
+  for (i = 0; i < 4; i++) {
     Bar1(218, 96 + i * 170, 806, 174 + i * 170, DARKGRAY24);
     Bar1(222, 100 + i * 170, 802, 170 + i * 170, LIGHTGRAY24);
   }
@@ -246,8 +243,7 @@ STATUS_CODE DrawMainPage()
 {
   int i;
   Bar1(0, 0, 1024, 768, DARKCYAN24);
-  for (i = 0; i < 3; i++)
-  {
+  for (i = 0; i < 3; i++) {
     Bar1(320, 198 + i * 130, 704, 272 + i * 130, DARKGRAY24);
     Bar1(322, 200 + i * 130, 702, 270 + i * 130, LIGHTGRAY24);
   }
@@ -296,34 +292,23 @@ void InfoN(int c, int i)
 
 void InfoName(int c, int i)
 {
-  if (c == 0)
-  {
+  if (c == 0) {
     InfoN(1, i);
-  }
-  else if (c == 1)
-  {
+  } else if (c == 1) {
     Bar1(130, 140 + i * 120, 894, 250 + i * 120, LIGHTRED24);
     bar3(130, 140 + i * 120, 894, 250 + i * 120, BLACK24);
     InfoN(1, i);
-  }
-  else if (c == 2)
-  {
+  } else if (c == 2) {
     InfoN(2, i);
-  }
-  else if (c == 3)
-  {
+  } else if (c == 3) {
     Bar1(130, 140 + i * 120, 894, 250 + i * 120, LIGHTRED24);
     bar3(130, 140 + i * 120, 894, 250 + i * 120, BLACK24);
     InfoN(2, i);
-  }
-  else if (c == 4)
-  {
+  } else if (c == 4) {
     Bar1(130, 140 + i * 120, 894, 250 + i * 120, RED24);
     bar3(130, 140 + i * 120, 894, 250 + i * 120, BLACK24);
     InfoN(2, i);
-  }
-  else if (c == 5)
-  {
+  } else if (c == 5) {
     Bar1(130, 140 + i * 120, 894, 250 + i * 120, RED24);
     bar3(130, 140 + i * 120, 894, 250 + i * 120, BLACK24);
     InfoN(1, i);
@@ -343,8 +328,7 @@ void RSelectMaps()
   int i;
   Bar1(0, 0, 1024, 768, DARKCYAN24);
   returnbut();
-  for (i = 0; i < 4; i++)
-  {
+  for (i = 0; i < 4; i++) {
     Bar1(218, 96 + i * 170, 806, 174 + i * 170, DARKGRAY24);
     Bar1(222, 100 + i * 170, 802, 170 + i * 170, LIGHTGRAY24);
   }
@@ -416,7 +400,7 @@ void AddBox2()
 {
   Bar1(135,560,1024,705,LIGHTGRAY24);
   Bar1(782,708,902,768,LIGHTGRAY24);
-  Bar1(135,705,150,768,LIGHTGRAY24); 
+  Bar1(135,705,150,768,LIGHTGRAY24);
   puthz(369,566,"录入上车时间",48,48,BLACK24);
   puthz(368,565,"录入上车时间",48,48,NAVY24);
   Bar1(145,642,275,692,WHITE24);
@@ -473,27 +457,20 @@ void YNbut(int cho)
     puthz(760,650,"是",48,48,BLACK24);
   } else if(cho==5) {
     Bar1(759,649,809,699,DARKGRAY24);
-	puthz(760,650,"是",48,48,RED24);
-	}
+    puthz(760,650,"是",48,48,RED24);
+  }
 }
 
 void DrawPage(int page)
 {
   Bar1(484, 620, 570, 670, DARKCYAN24);
-  if (page == 1)
-  {
+  if (page == 1) {
     put_asc16_size(485, 115 + 510, 2, 2, "1/4", BLACK24);
-  }
-  else if (page == 2)
-  {
+  } else if (page == 2) {
     put_asc16_size(485, 115 + 510, 2, 2, "2/4", BLACK24);
-  }
-  else if (page == 3)
-  {
+  } else if (page == 3) {
     put_asc16_size(485, 115 + 510, 2, 2, "3/4", BLACK24);
-  }
-  else if (page == 4)
-  {
+  } else if (page == 4) {
     put_asc16_size(485, 115 + 510, 2, 2, "4/4", BLACK24);
   }
 }

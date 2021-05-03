@@ -39,32 +39,26 @@ void rRead(Route *route, UserInfo *user, int rpage)
   temp_route = route;
   n = 0;
   while(n!=route->npassenger) {
-  	if(strcmp(route->ps[n].name,user->name)!=0) {
-  		n++; 
-	  } else if(strcmp(route->ps[n].name,user->name)==0) {
-	  	for(i=n;i<route->npassenger;i++) {
-	  		route->ps[i] = route->ps[i+1];
-	  		route->npassenger--;
-		  }
-	  }
+    if(strcmp(route->ps[n].name,user->name)!=0) {
+      n++;
+    } else if(strcmp(route->ps[n].name,user->name)==0) {
+      for(i=n; i<route->npassenger; i++) {
+        route->ps[i] = route->ps[i+1];
+        route->npassenger--;
+      }
+    }
   }
-  for (i = 0; i < 4; i++)
-  {
+  for (i = 0; i < 4; i++) {
     if (temp_route->ps[(rpage - 1) * 4 + i].note == 0 &&
-        temp_route->npassenger > (rpage - 1) * 4 + i)
-    {
+        temp_route->npassenger > (rpage - 1) * 4 + i) {
       InfoName(2, i);
       readmessage(temp_route, rpage, i);
-    }
-    else if (temp_route->ps[(rpage - 1) * 4 + i].note == 1 &&
-             temp_route->npassenger > (rpage - 1) * 4 + i)
-    {
+    } else if (temp_route->ps[(rpage - 1) * 4 + i].note == 1 &&
+               temp_route->npassenger > (rpage - 1) * 4 + i) {
       InfoName(3, i);
       readmessage(temp_route, rpage, i);
-    }
-    else if (temp_route->ps[(rpage - 1) * 4 + i].note == 2 &&
-             temp_route->npassenger > (rpage - 1) * 4 + i)
-    {
+    } else if (temp_route->ps[(rpage - 1) * 4 + i].note == 2 &&
+               temp_route->npassenger > (rpage - 1) * 4 + i) {
       InfoName(4, i);
       readmessage(temp_route, rpage, i);
     }
