@@ -71,12 +71,15 @@ void OverrideUserInfo(char *useracc, UserInfo *user)
   fclose(fp);
   fp = NULL;
 }
+
 void RecordFunc(UserInfo *user, int page, int line)
 {
+	int newnote;
   RecordTrace(user, page, line, 1);
-  user->history_lines[(page - 1) * 4 + line - 1].note =
-    Stak(user->history_lines[(page - 1) * 4 + line - 1].line_no, 410, 600, 2,
+  newnote = Stak(user->history_lines[(page - 1) * 4 + line - 1].line_no, 410, 600, 2,
          user->history_lines[(page - 1) * 4 + line - 1].note, 0, 1);
+  user->history_lines[(page - 1) * 4 + line - 1].note = newnote;
+	BusPassengerNote(newnote, user->history_lines[(page - 1) * 4 + line - 1].busnum, user->name);
   OverrideUserInfo(user->account, user);
 }
 

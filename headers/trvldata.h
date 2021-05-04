@@ -23,4 +23,7 @@ function RouteNewPassenger:
 */
 
 STATUS_CODE RouteNewPassenger(int route_line, char *route_name, HisLi *passenger_info, char *passenger_name);
+
+
+STATUS_CODE BusPassengerNote(int newnote, char *busname, char *username);
 #endif

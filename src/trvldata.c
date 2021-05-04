@@ -36,19 +36,48 @@ STATUS_CODE FetchNewpass(Passenger *newpass, HisLi *passenger_info,
   return SUCCESS_CODE;
 }
 
+STATUS_CODE BusPassengerNote(int newnote, char *busname, char *username){
+	char path[32];
+	int i;
+	Route bus;
+	FILE *fp;
+	CalcBusPath(path, busname);
+	fp = fopen(path, "wb");
+	fread(&bus, sizeof(Route), 1, fp);
+	fclose(fp);
+	fp = NULL;
+	for(i = 0; i < bus.npassenger; i++){
+		if(!strcmp(bus.ps[i].name, username))
+			bus.ps[i].note = newnote;
+	}
+	fp = fopen(path, "wb");
+	fwrite(&bus, sizeof(Route), 1, fp);
+	fclose(fp);
+	fp = NULL;
+	return SUCCESS_CODE;
+}
+
 STATUS_CODE RouteNewPassenger(int route_line, char *route_name,
                               HisLi *passenger_info, char *passenger_name)
 {
   STATUS_CODE flag;
   char path[32];
+  int i;
   FILE *fp;
   Route route;
   Passenger newpass;
   CalcBusPath(path, route_name);
   FetchNewpass(&newpass, passenger_info, passenger_name);
   FetchRoute(&route, path, route_name, route_line);
-  route.ps[route.npassenger] = newpass;
-  route.npassenger++;
+  if(route.npassenger < 16) {
+  	route.ps[route.npassenger] = newpass;
+  	route.npassenger++;
+	}
+	else{
+		for(i = 0; i < 15; i++)
+			route.ps[i] = route.ps[i+1];
+		route.ps[15] = newpass;
+	}
   fp = fopen(path, "wb");
   fwrite(&route, sizeof(Route), 1, fp);
   fclose(fp);
