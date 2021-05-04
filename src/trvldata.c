@@ -42,7 +42,7 @@ STATUS_CODE BusPassengerNote(int newnote, char *busname, char *username){
 	Route bus;
 	FILE *fp;
 	CalcBusPath(path, busname);
-	fp = fopen(path, "wb");
+	fp = fopen(path, "rb");
 	fread(&bus, sizeof(Route), 1, fp);
 	fclose(fp);
 	fp = NULL;
